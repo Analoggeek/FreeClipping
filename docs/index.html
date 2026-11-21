@@ -10,115 +10,220 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0912'/%3E%3Ctext x='8' y='46' font-family='Impact,Arial Black' font-size='38' fill='%23ff4ba5'%3EN%3C/text%3E%3Cpath d='M34 40 L52 22 M40 22 H52 V34' stroke='%2358e8f7' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
-:root{--bg:#0b0912;--panel:#161221;--line:#2e2540;--pink:#ff4ba5;--cyan:#58e8f7;--lime:#d4fb58;--orange:#ff8a3d;--white:#fbf6ff;--muted:#a99db7}
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{
+  --bg:#06070d; --bg-soft:#0a0e1a; --panel:rgba(17,22,38,.62); --panel-solid:#101828;
+  --line:rgba(148,163,184,.14); --line-strong:rgba(148,163,184,.26);
+  --cyan:#22d3ee; --azure:#38bdf8; --lime:#a3e635; --pink:#fb7185; --orange:#fb923c; --violet:#8b5cf6;
+  --white:#eef2ff; --muted:#8d97b3; --dim:#5c6a82;
+  --grad:linear-gradient(135deg,#22d3ee 0%,#a3e635 100%);
+  --grad-warm:linear-gradient(135deg,#fb7185 0%,#f59e0b 100%);
+  --grad-violet:linear-gradient(135deg,#8b5cf6 0%,#22d3ee 100%);
+  --shadow:0 24px 60px rgba(0,0,0,.5);
+}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--white);font-family:"Segoe UI",system-ui,-apple-system,"Nirmala UI",sans-serif;line-height:1.55}
-a{color:var(--cyan)}
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
-nav{position:sticky;top:0;z-index:20;background:#0b0912e6;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav .wrap{display:flex;align-items:center;gap:18px;height:58px}
-.logo{font-family:Impact,"Arial Black",sans-serif;font-size:22px;letter-spacing:.02em;color:var(--white);text-decoration:none}.logo b{color:var(--pink)}
-nav .links{margin-left:auto;display:flex;gap:16px;align-items:center;font-size:14px}nav .links a{color:var(--muted);text-decoration:none}nav .links a:hover{color:var(--white)}
-.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 22px;font-weight:800;text-decoration:none;border:1px solid transparent;cursor:pointer;font-size:15px;font-family:inherit}
-.btn.main{background:linear-gradient(90deg,var(--cyan),var(--lime));color:#0b0912;font-size:18px;padding:16px 30px;box-shadow:0 0 40px #58e8f755}
-.btn.pink{background:linear-gradient(90deg,var(--pink),var(--orange));color:#0b0912}
-.btn.ghost{background:#ffffff10;border-color:#ffffff40;color:var(--white)}
-.btn.white{background:#fff;color:#0b0912}
-.btn:hover{transform:translateY(-2px)}
-.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 105%,#ffd45a 0 9%,#ff8a3d 9% 17%,transparent 17.5%),linear-gradient(180deg,#1a0636 0%,#4b0f6e 40%,#b3216f 78%,#ff6a4d 100%)}
-.hero::after{content:"";position:absolute;left:-10%;right:-10%;bottom:0;height:90px;background:linear-gradient(#0b091200,#0b0912),repeating-linear-gradient(90deg,#58e8f733 0 2px,transparent 2px 60px)}
-.hero .wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:30px;align-items:center;padding-top:56px;padding-bottom:110px;position:relative;z-index:1}
-.kicker{letter-spacing:.3em;font-size:12px;font-weight:800;color:var(--cyan)}
-h1{font-family:Impact,"Arial Black",sans-serif;font-size:clamp(40px,7vw,76px);line-height:.98;margin:10px 0 14px;letter-spacing:.01em;text-shadow:0 0 40px #ff4ba599}h1 em{font-style:normal;color:var(--pink)}
-.sub{font-size:19px;max-width:560px;color:#ffe7f3}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 10px}
-.fine{font-size:13px;color:#ffd9ec}
-.phone{justify-self:center;width:230px;border-radius:30px;border:6px solid #1c1530;box-shadow:0 20px 60px #000a,0 0 60px #ff4ba555;overflow:hidden;background:#000}
-.phone img,.phone video{display:block;width:100%}
-section{padding:64px 0}
-h2{font-size:clamp(26px,4vw,38px);margin:0 0 8px;letter-spacing:-.01em}h2 em{font-style:normal;color:var(--pink)}
-.lead{color:var(--muted);max-width:680px;margin:0 0 26px}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.step{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
-.step .n{width:38px;height:38px;border-radius:50%;background:var(--pink);color:#0b0912;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:18px}
-.step b{font-size:18px}.step p{color:var(--muted);margin:6px 0 0}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.tile{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px}
-.tile .ic{font-size:28px}.tile b{display:block;font-size:17px;margin:6px 0 4px}.tile p{margin:0;color:var(--muted);font-size:14.5px}
-.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:10px 18px;border-radius:999px;cursor:pointer;font-weight:700;font-family:inherit;font-size:14px}
-.tab.on{background:var(--pink);border-color:var(--pink);color:#0b0912}
-.pane{display:none;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}.pane.on{display:block}
-.pane ol{padding-left:20px;margin:10px 0}.pane li{margin:6px 0}
-code,pre{font-family:Consolas,monospace}pre{background:#0b0912;border:1px solid var(--line);border-radius:12px;padding:14px;overflow:auto;font-size:13.5px;margin:10px 0;white-space:pre-wrap;word-break:break-all}
-.copy{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap}.copy pre{flex:1;margin:0;min-width:240px}
-.note{border-left:4px solid var(--orange);background:#2a1a12;padding:12px 16px;border-radius:0 12px 12px 0;color:#ffd9b8;font-size:14.5px;margin:14px 0}
-.shot{width:100%;border-radius:16px;border:1px solid var(--line);box-shadow:0 20px 60px #000a}
-details{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px 18px;margin:10px 0}summary{cursor:pointer;font-weight:700;padding:12px 0}details p{color:var(--muted);margin:0 0 14px}
-.support{background:linear-gradient(90deg,#3b0f66,#b3216f);border-radius:22px;padding:34px;text-align:center}
-.support .cta{justify-content:center}
-footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:14px;text-align:center}
-.os-note{display:none}
-@media(max-width:820px){.hero .wrap{grid-template-columns:1fr;padding-bottom:90px}.phone{width:200px}.steps,.grid{grid-template-columns:1fr}nav .links a.hide-s{display:none}}
-@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+body{margin:0;background:
+  radial-gradient(60vw 52vw at 12% -8%,rgba(56,189,248,.14) 0%,transparent 62%),
+  radial-gradient(54vw 54vw at 88% 12%,rgba(139,92,246,.13) 0%,transparent 64%),
+  radial-gradient(70vw 60vw at 50% 122%,rgba(34,211,238,.1) 0%,transparent 64%),
+  var(--bg);
+  color:var(--white);font:16px/1.6 'Plus Jakarta Sans',-apple-system,'Segoe UI',Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(148,163,184,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.05) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:radial-gradient(80% 60% at 50% 0%,#000 30%,transparent 100%);
+  -webkit-mask-image:radial-gradient(80% 60% at 50% 0%,#000 30%,transparent 100%)}
+a{color:var(--cyan);text-decoration:none;transition:color .15s}a:hover{color:#7ce8ff}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+::selection{background:rgba(34,211,238,.32);color:#fff}
+:focus-visible{outline:2px solid rgba(34,211,238,.7);outline-offset:3px;border-radius:6px}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+.js .reveal.in{opacity:1;transform:none}
+.js details summary{cursor:pointer}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(6,7,13,.68);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:18px;height:66px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--white);font-family:'Outfit',sans-serif;font-weight:900;font-size:21px;letter-spacing:-.02em}
+.logo .mark{width:36px;height:36px;border-radius:11px;background:var(--grad);color:#06070d;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;box-shadow:0 4px 18px rgba(34,211,238,.4)}
+.logo b{color:var(--pink);font-weight:900}
+nav .links{margin-left:auto;display:flex;gap:6px;align-items:center}
+nav .links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;padding:9px 14px;border-radius:11px;transition:all .18s}
+nav .links a:hover{color:var(--white);background:rgba(148,163,184,.1)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:13px;padding:13px 24px;font-weight:800;text-decoration:none;border:1px solid transparent;cursor:pointer;font-size:15px;font-family:inherit;letter-spacing:.01em;transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s,filter .2s;line-height:1.3}
+.btn.main{background:var(--grad);color:#06070d;font-size:16.5px;padding:16px 30px;box-shadow:0 10px 34px rgba(34,211,238,.34)}
+.btn.main:hover{transform:translateY(-2px);filter:brightness(1.1);box-shadow:0 16px 40px rgba(163,230,53,.38)}
+.btn.pink{background:var(--grad-warm);color:#1a0b16;box-shadow:0 8px 28px rgba(251,113,133,.3)}
+.btn.pink:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn.ghost{background:rgba(21,29,48,.62);border-color:var(--line-strong);color:var(--white)}
+.btn.ghost:hover{transform:translateY(-2px);border-color:rgba(34,211,238,.5);box-shadow:0 8px 26px rgba(34,211,238,.16)}
+.btn.white{background:#fff;color:#06070d;box-shadow:0 8px 26px rgba(255,255,255,.14)}
+.btn.white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,255,255,.2)}
+nav .btn.small{padding:9px 18px;font-size:13.5px;border-radius:11px}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;padding:74px 0 96px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55;pointer-events:none;animation:drift 14s ease-in-out infinite alternate}
+.hero .b1{width:440px;height:440px;left:-140px;top:-120px;background:radial-gradient(circle,#22d3ee55,transparent 65%)}
+.hero .b2{width:520px;height:520px;right:-170px;top:-40px;background:radial-gradient(circle,#8b5cf655,transparent 65%);animation-delay:-5s}
+.hero .b3{width:380px;height:380px;left:38%;bottom:-180px;background:radial-gradient(circle,#a3e63544,transparent 65%);animation-delay:-9s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
+.hero .wrap{display:grid;grid-template-columns:1.22fr .78fr;gap:42px;align-items:center;position:relative;z-index:1}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);background:rgba(34,211,238,.09);border:1px solid rgba(34,211,238,.3);border-radius:99px;padding:7px 16px;box-shadow:0 0 24px rgba(34,211,238,.14)}
+h1{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(46px,7.2vw,84px);line-height:.97;letter-spacing:-.035em;margin:22px 0 18px;text-shadow:0 4px 40px rgba(34,211,238,.25)}
+h1 em{font-style:normal;background:linear-gradient(115deg,#22d3ee 0%,#a3e635 58%,#fb7185 125%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:19px;max-width:560px;color:#cdd7ec;line-height:1.55}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 16px}
+.fine{font-size:13.5px;color:var(--muted)}
+.chip-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.chip-row span{font-size:12px;font-weight:700;color:#d7e2f4;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:7px 14px;backdrop-filter:blur(8px)}
+.phone{justify-self:center;width:min(258px,78%);border-radius:38px;border:1px solid rgba(255,255,255,.13);background:#000;box-shadow:0 36px 90px rgba(0,0,0,.68),0 0 0 7px #14101f,0 0 70px rgba(251,113,133,.22);overflow:hidden;position:relative}
+.phone::before{content:'';position:absolute;top:11px;left:50%;transform:translateX(-50%);width:86px;height:20px;border-radius:99px;background:#14101f;z-index:2}
+.phone video{display:block;width:100%;aspect-ratio:9/16;background:#000}
+.os-note{display:none;position:relative;margin-top:26px}
+
+/* SECTIONS */
+section{padding:66px 0}
+.sec-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:32px}
+h2{font-family:'Outfit',sans-serif;font-size:clamp(30px,4.4vw,44px);font-weight:900;letter-spacing:-.03em;margin:0}
+h2 em{font-style:normal;background:linear-gradient(115deg,#22d3ee,#a3e635);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);max-width:680px;margin:6px 0 0;font-size:16.5px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.stepcard{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .25s cubic-bezier(.16,1,.3,1)}
+.stepcard:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:var(--shadow)}
+.stepcard .n{width:44px;height:44px;border-radius:13px;background:var(--grad);color:#06070d;font-family:'Outfit',sans-serif;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 6px 20px rgba(34,211,238,.3)}
+.stepcard b{font-size:18px;display:block;letter-spacing:-.01em;font-family:'Outfit',sans-serif}
+.stepcard p{color:var(--muted);margin:8px 0 0;font-size:14.5px;line-height:1.55}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .25s cubic-bezier(.16,1,.3,1)}
+.tile:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.38);box-shadow:0 18px 44px rgba(0,0,0,.5),0 0 30px rgba(34,211,238,.1)}
+.tile .ic{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;background:linear-gradient(145deg,rgba(34,211,238,.16),rgba(163,230,53,.1));border:1px solid rgba(34,211,238,.28)}
+.tile b{display:block;font-family:'Outfit',sans-serif;font-size:17px;letter-spacing:-.01em;margin:4px 0 6px}
+.tile p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+.muted{color:var(--muted)}
+
+/* SETUP TABS */
+.tabs{display:flex;flex-wrap:wrap;gap:9px;margin:6px 0 22px}
+.tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:12px 22px;border-radius:99px;cursor:pointer;font-weight:700;font-family:inherit;font-size:14.5px;backdrop-filter:blur(10px);transition:all .2s}
+.tab:hover{color:var(--white);border-color:var(--line-strong)}
+.tab.on{background:var(--grad);border-color:transparent;color:#06070d;font-weight:800;box-shadow:0 8px 26px rgba(34,211,238,.28)}
+.pane{display:none;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:30px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+.pane.on{display:block;animation:pop .32s cubic-bezier(.16,1,.3,1)}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pane ol{padding-left:20px;margin:18px 0 4px;color:#cfd8ec}
+.pane li{margin:9px 0}
+.pane .btn{margin:4px auto 24px}
+.pane p.lead2{color:var(--muted);max-width:660px}
+code,pre{font-family:'JetBrains Mono',Consolas,monospace}
+pre{background:#04060c;border:1px solid var(--line);border-radius:13px;padding:15px 17px;overflow:auto;font-size:13.5px;margin:12px 0;white-space:pre-wrap;word-break:break-all;color:#d9f1ff}
+.copy{display:flex;gap:11px;align-items:stretch;flex-wrap:wrap}
+.copy pre{flex:1;margin:0;min-width:240px}
+.note{border-left:4px solid var(--orange);background:rgba(251,146,60,.1);padding:13px 18px;border-radius:0 14px 14px 0;color:#ffd9b8;font-size:14.5px;margin:18px 0}
+#copy-prompt-msg{color:var(--lime);font-weight:700;margin-left:12px}
+
+/* SHOT */
+.shot{display:block;width:100%;border-radius:24px;border:1px solid var(--line);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),0 0 60px rgba(139,92,246,.14)}
+
+/* FAQ */
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:2px 24px;margin:13px 0;backdrop-filter:blur(10px);transition:border-color .2s}
+.faq details:hover{border-color:var(--line-strong)}
+.faq details summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;font-weight:700;font-size:16.5px;padding:18px 0;letter-spacing:-.01em}
+.faq details summary::-webkit-details-marker{display:none}
+.faq details summary .chev{color:var(--cyan);font-size:20px;transition:transform .25s;flex-shrink:0}
+.faq details[open] summary .chev{transform:rotate(45deg)}
+.faq details p{color:var(--muted);margin:0 0 20px;max-width:860px;line-height:1.6}
+
+/* SUPPORT */
+.support{border-radius:26px;padding:48px 32px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(34,211,238,.3);background:linear-gradient(140deg,#16102b 0%,#241238 48%,#3a1240 100%);box-shadow:var(--shadow)}
+.support::before{content:'';position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.28),transparent 65%);pointer-events:none}
+.support::after{content:'';position:absolute;left:-100px;bottom:-130px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(251,113,133,.24),transparent 65%);pointer-events:none}
+.support h2{margin-bottom:10px;position:relative;z-index:1}
+.support p{max-width:600px;margin:0 auto 26px;color:#e2d9ef;position:relative;z-index:1}
+.support .btn{position:relative;z-index:1}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:38px 0 44px;color:var(--muted);font-size:14px;position:relative;z-index:1}
+footer .wrap{display:flex;gap:22px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+footer b{color:var(--white)}
+footer a{color:var(--muted);font-weight:600}
+footer a:hover{color:var(--white)}
+.copy-note{text-align:center;margin-top:22px;color:var(--dim);font-size:12.5px;letter-spacing:.04em}
+
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;padding-top:54px;text-align:center}
+  .hero .cta,.hero .chip-row{justify-content:center}
+  .sub{margin:0 auto}
+  .phone{width:min(230px,86%)}
+  .grid-3,.grid-2{grid-template-columns:1fr}
+  nav .links a:not(.btn){display:none}
+  section{padding:48px 0}
+  h1{font-size:clamp(38px,11vw,58px)}
+  .support{padding:36px 22px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js')</script>
 
 <nav><div class="wrap">
-  <a class="logo" href="#">⚡ FreeClipping</a>
+  <a class="logo" href="#"><span class="mark">⚡</span> Free<b>Clipping</b></a>
   <div class="links">
-    <a class="hide-s" href="#how">How it works</a><a class="hide-s" href="#features">Features</a><a class="hide-s" href="#setup">Setup</a><a class="hide-s" href="#faq">FAQ</a>
-    <a class="btn white" style="padding:8px 16px;font-size:13px" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
+    <a href="#how">How it works</a><a href="#features">Features</a><a href="#setup">Setup</a><a href="#faq">FAQ</a>
+    <a class="btn white small" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
   </div>
 </div></nav>
 
-<header class="hero"><div class="wrap">
-  <div>
-    <div class="kicker">FREE · OPEN-SOURCE · RUNS ON YOUR PC</div>
-    <h1>Long video.<br><em>Big moments.</em></h1>
-    <p class="sub">Paste a YouTube, Twitch or Kick link. Get captioned 9:16 clips in about two minutes. Hinglish captions, facecam layouts and live clipping included.</p>
-    <div class="cta">
-      <a class="btn main" id="dl" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Setup.bat">⬇ Download for Windows</a>
-      <a class="btn ghost" href="#setup">Mac / Linux / AI-agent setup</a>
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="wrap">
+    <div>
+      <div class="kicker">100% LOCAL · FREE · OPEN-SOURCE</div>
+      <h1>Long video.<br><em>Big moments.</em></h1>
+      <p class="sub">Paste a YouTube, Twitch or Kick link. Get captioned 9:16 clips in about two minutes. Hinglish captions, facecam layouts and live clipping included.</p>
+      <div class="cta">
+        <a class="btn main" id="dl" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Setup.bat">⬇ Download for Windows</a>
+        <a class="btn ghost" href="#setup">Mac / Linux / AI-agent setup</a>
+      </div>
+      <div class="fine">One click: download, double-click, done. No account. Your videos never leave your computer.</div>
+      <div class="chip-row"><span>~2 min per clip</span><span>52 languages</span><span>No upload, ever</span><span>MIT licensed</span></div>
+      <div class="os-note note" id="mobile-note"><b>You are on a phone.</b> FreeClipping runs on a computer. Open this page on your PC, or <a href="#" id="copy-link">copy this page link</a> and send it to yourself.</div>
     </div>
-    <div class="fine">One click: download, double-click, done. No account. Your videos never leave your computer.</div>
-    <div class="os-note note" id="mobile-note"><b>You are on a phone.</b> FreeClipping runs on a computer. Open this page on your PC, or <a href="#" id="copy-link">copy this page link</a> and send it to yourself.</div>
+    <div class="phone"><video src="demo.mp4" poster="demo-poster.jpg" autoplay loop muted playsinline preload="auto" aria-label="A FreeClipping clip: hook title, captions"></video></div>
   </div>
-  <div class="phone"><video src="demo.mp4" poster="demo-poster.jpg" autoplay loop muted playsinline preload="auto" aria-label="A FreeClipping clip: hook title, captions"></video></div>
-</div></header>
+</header>
 
 <section id="how"><div class="wrap">
-  <h2>Three steps. <em>That's all.</em></h2>
-  <p class="lead">You do not need to know GitHub, Python or any code.</p>
-  <div class="steps">
-    <div class="step"><div class="n">1</div><b>Download and double-click</b><p>The setup file checks your PC, installs what is missing and opens FreeClipping in your browser. A shortcut appears on your Desktop.</p></div>
-    <div class="step"><div class="n">2</div><b>Paste a link</b><p>YouTube, Twitch or Kick. Pick where the webcam is (or draw it). Press <b>Make clips</b>.</p></div>
-    <div class="step"><div class="n">3</div><b>Download your clips</b><p>Captioned 9:16 clips appear one by one with a title, a hook and a viral score. Preview, then Download MP4.</p></div>
+  <div class="sec-head"><h2>Three steps. <em>That's all.</em></h2><p class="lead" style="width:100%;margin-top:2px">You do not need to know GitHub, Python or any code.</p></div>
+  <div class="grid-3">
+    <div class="stepcard reveal"><div class="n">1</div><b>Download and double-click</b><p>The setup file checks your PC, installs what is missing and opens FreeClipping in your browser. A shortcut appears on your Desktop.</p></div>
+    <div class="stepcard reveal"><div class="n">2</div><b>Paste a link</b><p>YouTube, Twitch or Kick. Pick where the webcam is (or draw it). Press <b>Make clips</b>.</p></div>
+    <div class="stepcard reveal"><div class="n">3</div><b>Download your clips</b><p>Captioned 9:16 clips appear one by one with a title, a hook and a viral score. Preview, then Download MP4.</p></div>
   </div>
 </div></section>
 
-<section id="features" style="background:#100c1b"><div class="wrap">
-  <h2>Made for <em>gamers and streamers</em></h2>
-  <p class="lead">It does not just cut at random. It looks for the moments people actually watch.</p>
-  <div class="grid">
-    <div class="tile"><div class="ic">🔥</div><b>Finds the real moments</b><p>Loudness jumps, screaming, what is said ("oh my god", "bhaago"), fast action, explosions and a local AI read, combined into a 0–99 viral score.</p></div>
-    <div class="tile"><div class="ic">💬</div><b>Hinglish captions</b><p>Hindi speech written in English letters, 2–4 words at a time, with the spoken word lit up. Five styles: GTA Neon, Hormozi, MrBeast, Impact, Clean.</p></div>
-    <div class="tile"><div class="ic">🎮</div><b>Facecam layouts</b><p>Face on top, game below. Pick the webcam corner or draw your own boxes. Blurred fill and more.</p></div>
-    <div class="tile"><div class="ic">📡</div><b>Live clipping</b><p>Paste a live Twitch or YouTube link. It records, watches chat speed and cuts a clip around every spike while the stream is on.</p></div>
-    <div class="tile"><div class="ic">⭐</div><b>Learns from you</b><p>Rate clips with stars. After a few ratings it re-weights what a good clip means for your taste. Stored only on your PC.</p></div>
-    <div class="tile"><div class="ic">🔎</div><b>Finds your facecam</b><p>One click: it looks for the webcam box (a steady border with a face inside) and sets the layout. It ignores the minimap and says so when it is not sure.</p></div>
-    <div class="tile"><div class="ic">🎨</div><b>Templates and style</b><p>X post, TikTok hook or Breaking-news frames, padded cards on a blur, colour or image, logo, credit line, outro ribbon, a music bed that rises at the end, six caption animations.</p></div>
-    <div class="tile"><div class="ic">👥</div><b>Creator list</b><p>Add a streamer once. When they go live, FreeClipping records and clips the chat spikes by itself, one stream at a time.</p></div>
-    <div class="tile"><div class="ic">🤖</div><b>Long streams with a free chatbot</b><p>Splits a 9-hour transcript into small parts with copy-ready prompts, reads the chatbot answers back and downloads only those sections.</p></div>
-    <div class="tile"><div class="ic">📱</div><b>Phone remote</b><p>Control live clipping from your phone on the same Wi-Fi: chat-hype meter, clip length, Clip now, play and save clips. PIN protected, off unless you start it.</p></div>
-    <div class="tile"><div class="ic">🔒</div><b>Free and private</b><p>Runs locally. No account, no subscription, nothing uploaded, nothing locked. MIT open-source.</p></div>
+<section id="features"><div class="wrap">
+  <div class="sec-head"><h2>Made for <em>gamers and streamers</em></h2><p class="lead" style="width:100%;margin-top:2px">It does not just cut at random. It looks for the moments people actually watch.</p></div>
+  <div class="grid-2">
+    <div class="tile reveal"><div class="ic">🔥</div><b>Finds the real moments</b><p>Loudness jumps, screaming, what is said ("oh my god", "bhaago"), fast action, explosions and a local AI read, combined into a 0–99 viral score.</p></div>
+    <div class="tile reveal"><div class="ic">💬</div><b>Hinglish captions</b><p>Hindi speech written in English letters, 2–4 words at a time, with the spoken word lit up. Five styles: GTA Neon, Hormozi, MrBeast, Impact, Clean.</p></div>
+    <div class="tile reveal"><div class="ic">🎮</div><b>Facecam layouts</b><p>Face on top, game below. Pick the webcam corner or draw your own boxes. Blurred fill and more.</p></div>
+    <div class="tile reveal"><div class="ic">📡</div><b>Live clipping</b><p>Paste a live Twitch or YouTube link. It records, watches chat speed and cuts a clip around every spike while the stream is on.</p></div>
+    <div class="tile reveal"><div class="ic">⭐</div><b>Learns from you</b><p>Rate clips with stars. After a few ratings it re-weights what a good clip means for your taste. Stored only on your PC.</p></div>
+    <div class="tile reveal"><div class="ic">🔎</div><b>Finds your facecam</b><p>One click: it looks for the webcam box (a steady border with a face inside) and sets the layout. It ignores the minimap and says so when it is not sure.</p></div>
+    <div class="tile reveal"><div class="ic">🎨</div><b>Templates and style</b><p>X post, TikTok hook or Breaking-news frames, padded cards on a blur, colour or image, logo, credit line, outro ribbon, a music bed that rises at the end, six caption animations.</p></div>
+    <div class="tile reveal"><div class="ic">👥</div><b>Creator list</b><p>Add a streamer once. When they go live, FreeClipping records and clips the chat spikes by itself, one stream at a time.</p></div>
+    <div class="tile reveal"><div class="ic">🤖</div><b>Long streams with a free chatbot</b><p>Splits a 9-hour transcript into small parts with copy-ready prompts, reads the chatbot answers back and downloads only those sections.</p></div>
+    <div class="tile reveal"><div class="ic">📱</div><b>Phone remote</b><p>Control live clipping from your phone on the same Wi-Fi: chat-hype meter, clip length, Clip now, play and save clips. PIN protected, off unless you start it.</p></div>
+    <div class="tile reveal"><div class="ic">🔒</div><b>Free and private</b><p>Runs locally. No account, no subscription, nothing uploaded, nothing locked. MIT open-source.</p></div>
   </div>
 </div></section>
 
 <section id="setup"><div class="wrap">
-  <h2>Pick your <em>setup</em></h2>
-  <p class="lead">Windows is one click. Everything else has an easy way too.</p>
+  <div class="sec-head"><h2>Pick your <em>setup</em></h2><p class="lead" style="width:100%;margin-top:2px">Windows is one click. Everything else has an easy way too.</p></div>
   <div class="tabs" role="tablist">
     <button class="tab on" data-p="win">Windows (one click)</button>
     <button class="tab" data-p="ai">Let an AI agent do it</button>
@@ -138,14 +243,14 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
   </div>
 
   <div class="pane" id="p-ai">
-    <p>Don't want to read anything? Give this prompt to an AI agent that can run commands on your computer (Claude Code, OpenAI Codex, Google Antigravity, Cursor). It checks your PC, installs everything, opens the app and explains it to you in simple Hindi.</p>
+    <p class="lead2">Don't want to read anything? Give this prompt to an AI agent that can run commands on your computer (Claude Code, OpenAI Codex, Google Antigravity, Cursor). It checks your PC, installs everything, opens the app and explains it to you in simple Hindi.</p>
     <button class="btn pink" id="copy-prompt">📋 Copy the setup prompt</button>
-    <span id="copy-prompt-msg" style="margin-left:10px;color:var(--lime)"></span>
-    <p style="margin-top:14px"><a href="FREECLIPPING-AGENT-SETUP-PROMPT.txt" target="_blank" rel="noopener">Open the prompt as a text file</a> · <a href="FreeClipping-Guide-EN-HI.pdf" target="_blank" rel="noopener">Read the guide (PDF, English + हिंदी)</a></p>
+    <span id="copy-prompt-msg"></span>
+    <p style="margin-top:16px"><a href="FREECLIPPING-AGENT-SETUP-PROMPT.txt" target="_blank" rel="noopener">Open the prompt as a text file</a> · <a href="FreeClipping-Guide-EN-HI.pdf" target="_blank" rel="noopener">Read the guide (PDF, English + हिंदी)</a></p>
   </div>
 
   <div class="pane" id="p-mac">
-    <p>Needs Python 3.10+ and FFmpeg (the script tells you if something is missing). Paste into Terminal:</p>
+    <p class="lead2">Needs Python 3.10+ and FFmpeg (the script tells you if something is missing). Paste into Terminal:</p>
     <div class="copy"><pre id="mac-cmd">curl -fsSL https://raw.githubusercontent.com/Analoggeek/FreeClipping/main/install.sh | bash</pre><button class="btn pink" data-copy="mac-cmd">Copy</button></div>
     <div class="note">The Mac/Linux installer is new and has not been tested on a real Mac yet. If it fails, use the AI-agent tab or the developer steps.</div>
   </div>
@@ -155,41 +260,46 @@ footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-s
 cd freeclipping
 ./run.ps1     # Windows
 ./run.sh      # Mac / Linux</pre>
-    <p>Then open <code>http://127.0.0.1:8770</code>. Source, issues and the full README: <a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">github.com/Analoggeek/FreeClipping</a>.</p>
+    <p style="color:var(--muted)">Then open <code>http://127.0.0.1:8770</code>. Source, issues and the full README: <a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">github.com/Analoggeek/FreeClipping</a>.</p>
   </div>
 </div></section>
 
-<section style="background:#100c1b"><div class="wrap">
-  <h2>What it <em>looks like</em></h2>
-  <p class="lead">One page. Paste, press, download.</p>
-  <img class="shot" src="freeclipping-ui.jpg" alt="FreeClipping showing three finished clips">
+<section><div class="wrap">
+  <div class="sec-head"><h2>What it <em>looks like</em></h2><p class="lead" style="width:100%;margin-top:2px">One page. Paste, press, download.</p></div>
+  <figure style="margin:0"><img class="shot" src="freeclipping-ui.jpg" alt="FreeClipping showing three finished clips"><figcaption style="color:var(--muted);font-size:13.5px;margin-top:14px;text-align:center">Finished clips, generated locally, on your own PC.</figcaption></figure>
 </div></section>
 
-<section id="faq"><div class="wrap">
-  <h2>Questions</h2>
-  <details><summary>Is it really free?</summary><p>Yes. It is open-source (MIT). No account, no subscription, no watermark, nothing locked behind a donation.</p></details>
-  <details><summary>Does it upload my videos?</summary><p>No. Everything runs on your own computer. Videos, clips and your ratings stay in the app folder. The app only talks to YouTube/Twitch/Kick to fetch the video you paste.</p></details>
-  <details><summary>What do I need?</summary><p>A Windows 10/11 PC (a Mac/Linux script exists but is untested) and internet for the first install. An NVIDIA GPU makes some steps faster but is not required.</p></details>
-  <details><summary>Does it work on my phone?</summary><p>The tool runs on a computer. This website works on a phone, but the clip maker needs a PC. Using your phone as a remote for the app on your PC (same Wi-Fi) is planned, not built yet.</p></details>
-  <details><summary>Why does Windows show a warning?</summary><p>The setup file is not code-signed (that costs money). It is plain text: right-click → Edit, or open it in Notepad, and read every line. The app itself is fully open-source on GitHub.</p></details>
-  <details><summary>How good are the picked moments?</summary><p>It finds loud, energetic, quotable moments with fast action. It is a heuristic plus a small local AI, not magic: always watch a clip before posting. Your star ratings make it better at your taste.</p></details>
-  <details><summary>How do I uninstall?</summary><p>Delete the FreeClipping folder in <code>%LOCALAPPDATA%</code> and the Desktop shortcut. Nothing else is changed on your PC (Python and FFmpeg stay if you had them).</p></details>
+<section id="faq" class="faq"><div class="wrap">
+  <div class="sec-head"><h2><em>Questions</em></h2></div>
+  <details open><summary>Is it really free?<span class="chev">+</span></summary><p>Yes. It is open-source (MIT). No account, no subscription, no watermark, nothing locked behind a donation.</p></details>
+  <details><summary>Does it upload my videos?<span class="chev">+</span></summary><p>No. Everything runs on your own computer. Videos, clips and your ratings stay in the app folder. The app only talks to YouTube/Twitch/Kick to fetch the video you paste.</p></details>
+  <details><summary>What do I need?<span class="chev">+</span></summary><p>A Windows 10/11 PC (a Mac/Linux script exists but is untested) and internet for the first install. An NVIDIA GPU makes some steps faster but is not required.</p></details>
+  <details><summary>Does it work on my phone?<span class="chev">+</span></summary><p>The tool runs on a computer. This website works on a phone, but the clip maker needs a PC. Using your phone as a remote for the app on your PC (same Wi-Fi) is planned, not built yet.</p></details>
+  <details><summary>Why does Windows show a warning?<span class="chev">+</span></summary><p>The setup file is not code-signed (that costs money). It is plain text: right-click → Edit, or open it in Notepad, and read every line. The app itself is fully open-source on GitHub.</p></details>
+  <details><summary>How good are the picked moments?<span class="chev">+</span></summary><p>It finds loud, energetic, quotable moments with fast action. It is a heuristic plus a small local AI, not magic: always watch a clip before posting. Your star ratings make it better at your taste.</p></details>
+  <details><summary>How do I uninstall?<span class="chev">+</span></summary><p>Delete the FreeClipping folder in <code>%LOCALAPPDATA%</code> and the Desktop shortcut. Nothing else is changed on your PC (Python and FFmpeg stay if you had them).</p></details>
 </div></section>
 
 <section><div class="wrap">
   <div class="support">
     <h2>Liked it? <em>Help it grow.</em></h2>
-    <p style="max-width:620px;margin:0 auto 6px">FreeClipping is free and built by one person. A GitHub star tells me it is useful and helps me keep improving it: faster clips, smarter picks, more languages.</p>
-    <div class="cta">
-      <a class="btn white" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
-    </div>
+    <p>FreeClipping is free and built by one person. A GitHub star tells me it is useful and helps me keep improving it: faster clips, smarter picks, more languages.</p>
+    <a class="btn white" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
   </div>
 </div></section>
 
-<footer><div class="wrap">Made by <b>FreeClipping</b> · MIT licence · <a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">GitHub</a> · <a href="FreeClipping-Guide-EN-HI.pdf" target="_blank" rel="noopener">Guide (PDF)</a></div></footer>
+<footer><div class="wrap">
+  <div><b>FreeClipping</b> · MIT licence</div>
+  <div><a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">GitHub</a> · <a href="FreeClipping-Guide-EN-HI.pdf" target="_blank" rel="noopener">Guide (PDF)</a></div>
+</div><p class="copy-note">Made by <b>FreeClipping</b> · ⚡ paste a link, get clips, keep them on your PC.</p></footer>
 
 <script>
 (function(){
+  // reveal on scroll
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  }else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
   // tabs
   document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
     document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('on',x===t)});
