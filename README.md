@@ -41,6 +41,9 @@ FreeClipping uses an intelligent hybrid audio-visual heuristic pipeline to pinpo
 - **Live Stream Clipping:** Automatically detects chat spikes on active Twitch and YouTube live streams to cut clips in real-time.
 - **Creator Radar:** Add streamer handles; FreeClipping monitors their channels and automatically records and clips viral moments when they go live.
 - **Phone Remote Companion:** Connect your phone over local Wi-Fi to monitor live clips, trigger instant trims, and preview videos directly from your mobile browser.
+- **OS-Style Desktop Shell:** FreeClipping looks and works like a little desktop OS — a top menu bar (brand, live clock, day/night toggle), a bottom dock with your two views, and every panel styled as a window with traffic-light dots.
+- **Day / Night Mode:** One click in the top bar switches between a light day theme and the dark night theme (your choice is saved and respects your system setting).
+- **Mobile-First:** The whole app adapts to phones — top bar and dock collapse to icon-only, panels stack, and the mobile phone remote has its own day/night theme.
 - **100% Private & Local:** The server binds strictly to `127.0.0.1`. No telemetry, no API fees, no subscriptions.
 
 ---
@@ -120,6 +123,8 @@ To control clipping from your mobile phone on the same Wi-Fi network:
 NEONCLIPPING_LAN=1 ./run.sh
 ```
 Open the displayed local IP address (e.g. `http://192.168.1.XX:8770/m`) on your phone and enter the secure 6-digit PIN shown on your PC screen.
+
+The phone remote switches between day and night themes from the **☀/🌙** button in the top right — your choice is saved between visits.
 
 ---
 
