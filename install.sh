@@ -58,6 +58,6 @@ echo
 echo "SETUP COMPLETE."
 echo "Start FreeClipping:  $DIR/start.sh    (then open http://127.0.0.1:8770)"
 echo "Use: 1) paste a video link  2) press 'Make clips'  3) preview and 'Download MP4'."
-[ "${NO_START:-0}" = "1" ] && exit 0
+[ "${NEONCLIPPING_NO_START:-${NO_START:-0}}" = "1" ] && exit 0
 echo "Starting now..."
 exec "$DIR/start.sh"
