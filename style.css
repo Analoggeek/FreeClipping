@@ -384,7 +384,7 @@ em { font-style: normal; color: var(--cyan); }
 main {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 76px 30px 112px;
+  padding: 76px 30px 132px;
   position: relative;
 }
 
@@ -1081,7 +1081,7 @@ details.panel > summary::after {
 
 .export-bar {
   position: sticky;
-  bottom: 88px;
+  bottom: 108px;
   z-index: 20;
   display: flex;
   align-items: center;
@@ -1459,7 +1459,7 @@ details[open] summary::before { content: '▾ '; }
   .tb-clock { font-size: 11px; }
   .tb-gh { width: 34px; height: 34px; font-size: 16px; }
   .tb-theme { width: 34px; height: 34px; font-size: 15px; }
-  main { padding: 60px 14px 96px; }
+  main { padding: 60px 14px 112px; }
   h1 { font-size: 29px; }
   .top { flex-direction: column; align-items: flex-start; gap: 14px; }
   .url-row { flex-direction: column; }
@@ -1472,7 +1472,7 @@ details[open] summary::before { content: '▾ '; }
   .dock-ic { font-size: 18px; }
   .dock-lb { display: none; }
   .dock-badge { top: -3px; right: 2px; min-width: 17px; padding: 0 5px; font-size: 9px; }
-  .export-bar { position: sticky; bottom: 66px; z-index: 30; }
+  .export-bar { position: sticky; bottom: 84px; z-index: 30; }
   .library-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
   .panel { padding: 16px 16px 18px; }
   .panel > .section-head { padding-left: 50px; }
