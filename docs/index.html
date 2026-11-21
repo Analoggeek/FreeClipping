@@ -55,6 +55,9 @@ nav .links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:
 nav .links a:hover{color:var(--white);background:rgba(148,163,184,.1)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:13px;padding:13px 24px;font-weight:800;text-decoration:none;border:1px solid transparent;cursor:pointer;font-size:15px;font-family:inherit;letter-spacing:.01em;transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s,filter .2s;line-height:1.3}
 .btn.main{background:var(--grad);color:#06070d;font-size:16.5px;padding:16px 30px;box-shadow:0 10px 34px rgba(34,211,238,.34)}
+.btn.main{position:relative;overflow:hidden}
+.btn.main::after{content:'';position:absolute;top:0;left:-75%;width:42%;height:100%;background:linear-gradient(115deg,transparent 0%,rgba(255,255,255,.55) 50%,transparent 100%);transform:skewX(-22deg);transition:left .58s ease}
+.btn.main:hover::after{left:135%}
 .btn.main:hover{transform:translateY(-2px);filter:brightness(1.1);box-shadow:0 16px 40px rgba(163,230,53,.38)}
 .btn.pink{background:var(--grad-warm);color:#1a0b16;box-shadow:0 8px 28px rgba(251,113,133,.3)}
 .btn.pink:hover{transform:translateY(-2px);filter:brightness(1.06)}
@@ -81,12 +84,14 @@ nav .btn.small{padding:9px 18px;font-size:13.5px;border-radius:11px}
 .kicker{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);background:rgba(34,211,238,.09);border:1px solid rgba(34,211,238,.3);border-radius:99px;padding:7px 16px;box-shadow:0 0 24px rgba(34,211,238,.14)}
 h1{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(46px,7.2vw,84px);line-height:.97;letter-spacing:-.035em;margin:22px 0 18px;text-shadow:0 4px 40px rgba(34,211,238,.25)}
 h1 em{font-style:normal;background:linear-gradient(115deg,#22d3ee 0%,#a3e635 58%,#fb7185 125%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.sub{font-size:19px;max-width:560px;color:#cdd7ec;line-height:1.55}
+.sub{font-size:19px;max-width:560px;color:#cdd7ec;line-height:1.6;letter-spacing:.001em}
 .cta{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 16px}
-.fine{font-size:13.5px;color:var(--muted)}
 .chip-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
 .chip-row span{font-size:12px;font-weight:700;color:#d7e2f4;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:7px 14px;backdrop-filter:blur(8px)}
 .phone{justify-self:center;width:min(258px,78%);border-radius:38px;border:1px solid rgba(255,255,255,.13);background:#000;box-shadow:0 36px 90px rgba(0,0,0,.68),0 0 0 7px #14101f,0 0 70px rgba(251,113,133,.22);overflow:hidden;position:relative}
+.hero .phone{animation:float 7s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@media (prefers-reduced-motion:reduce){.hero .phone{animation:none}}
 .phone::before{content:'';position:absolute;top:11px;left:50%;transform:translateX(-50%);width:86px;height:20px;border-radius:99px;background:#14101f;z-index:2}
 .phone video{display:block;width:100%;aspect-ratio:9/16;background:#000}
 .os-note{display:none;position:relative;margin-top:26px}
@@ -151,6 +156,7 @@ pre{background:#04060c;border:1px solid var(--line);border-radius:13px;padding:1
 .support .btn{position:relative;z-index:1}
 
 /* FOOTER */
+body::after{content:'';position:fixed;top:0;left:0;right:0;height:3px;z-index:100;background:linear-gradient(90deg,#22d3ee,#a3e635,#fb7185,#8b5cf6);pointer-events:none}
 footer{border-top:1px solid var(--line);padding:38px 0 44px;color:var(--muted);font-size:14px;position:relative;z-index:1}
 footer .wrap{display:flex;gap:22px;justify-content:space-between;flex-wrap:wrap;align-items:center}
 footer b{color:var(--white)}
@@ -180,7 +186,6 @@ footer a:hover{color:var(--white)}
   .hero .wrap{gap:26px}
   .sub{font-size:16px}
   .kicker{font-size:10px;letter-spacing:.14em}
-  .fine{font-size:12px}
   .nav-btn,nav .btn.small{padding:8px 10px;font-size:12px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -220,8 +225,7 @@ footer a:hover{color:var(--white)}
         <a class="btn main" id="dl" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Windows-x64.zip">⬇ Download for Windows (offline)</a>
         <a class="btn ghost" id="dl-alt" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-macOS-arm64.zip">⬇ Download for macOS (offline)</a>
       </div>
-      <div class="fine">One click: download, double-click, done. No account. Your videos never leave your computer. Native <b>.dmg</b> (macOS) + <b>.exe</b> (Windows) + offline zips — all offline, zero internet needed after download.</div>
-      <div class="chip-row"><span>~2 min per clip</span><span>52 languages</span><span>No upload, ever</span><span>MIT licensed</span><span>3D icon</span></div>
+      <div class="chip-row"><span>~2 min per clip</span><span>52 languages</span><span>No upload, ever</span><span>MIT licensed</span><span>Free &amp; open-source</span></div>
       <div class="os-note note" id="mobile-note"><b>You are on a phone.</b> FreeClipping runs on a computer. Open this page on your PC — or just use the phone as a remote for the app on your PC over the same Wi-Fi (<code>NEONCLIPPING_LAN=1</code>).<br><a href="#" id="copy-link">copy this page link ↗</a> and send it to yourself.</div>
     </div>
     <div class="phone"><video src="demo.mp4" poster="demo-poster.jpg" autoplay loop muted playsinline preload="auto" aria-label="A FreeClipping clip: hook title, captions"></video></div>
@@ -287,7 +291,7 @@ footer a:hover{color:var(--white)}
     <ol>
       <li>Unzip, then in Terminal: <code>chmod +x FreeClipping-Offline-Setup-macOS-arm64.sh &amp;&amp; ./FreeClipping-Offline-Setup-macOS-arm64.sh</code></li>
       <li>Requires Python 3.12 (<code>brew install python@3.12</code>). The installer installs nothing system-wide.</li>
-      <li>Then launch from <code>~/Applications/FreeClipping.app</code> — with the 3D bolt icon.</li>
+      <li>Then launch from <code>~/Applications/FreeClipping.app</code> — with the 3D icon.</li>
     </ol>
     <div class="note">Fully offline (~217 MB zip). Intel Macs: <a href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-macOS-x64.zip">FreeClipping-Offline-macOS-x64.zip</a>.</div>
   </div>

@@ -200,9 +200,9 @@ try {
     if (-not $NoShortcut) { try {
         $desk = [Environment]::GetFolderPath('Desktop')
         $sh = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk 'FreeClipping.lnk'))
-        $sh.TargetPath = $startBat; $sh.WorkingDirectory = $InstallDir; $sh.Description = 'FreeClipping - captioned 9:16 clips'; $sh.Save()
+        $sh.TargetPath = $startBat; $sh.WorkingDirectory = $InstallDir; $sh.Description = 'FreeClipping - Turn long YouTube, Twitch and Kick videos into captioned 9:16 clips, on your own PC'; $sh.Save()
         $sh2 = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk 'FreeClipping (phone access).lnk'))
-        $sh2.TargetPath = $phoneBat; $sh2.WorkingDirectory = $InstallDir; $sh2.Description = 'FreeClipping with phone remote (same Wi-Fi, PIN)'; $sh2.Save()
+        $sh2.TargetPath = $phoneBat; $sh2.WorkingDirectory = $InstallDir; $sh2.Description = 'FreeClipping phone remote - control live clipping from your phone on the same Wi-Fi, PIN protected'; $sh2.Save()
         Ok "Desktop pe 'FreeClipping' shortcut ban gaya."
         Ok "Desktop pe 'FreeClipping (phone access)' shortcut bhi ban gaya: phone se live clipping control karne ke liye."
     } catch { Warn "Desktop shortcut nahi ban paya. Start file: $startBat" } }

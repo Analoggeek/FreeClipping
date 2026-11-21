@@ -28,7 +28,8 @@ def resize_png(src, size):
 
 def crop_tile():
     master = Image.open(ICONS / 'master-3d.png').convert('RGB')
-    crop = master.crop((172, 157, 872, 857))
+    # new master-3d.png (2048x2048): tile spans x:407..1622, y:410..1622 (rounded-square just-detected)
+    crop = master.crop((407, 410, 1622, 1622))
     crop.save(TILE)
     return TILE
 
