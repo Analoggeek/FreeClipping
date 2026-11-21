@@ -57,7 +57,7 @@ jobs:
         run: |
           pyinstaller --noconfirm --onefile --clean `
             --icon icons/app-icon.ico `
-            --add-data "index.html;." `
+            --add-data "app/index.html;app" `
             --add-data "style.css;." `
             --add-data "app.js;." `
             --add-data "mobile.html;." `

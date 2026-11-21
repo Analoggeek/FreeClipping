@@ -38,7 +38,7 @@ PYTHON_ABI = 'cp312'
 
 APP_FILES = [
     'app.py', 'app.js', 'extras.js', 'transcripts.js', 'vision.js', 'report.js',
-    'style.css', 'index.html', 'mobile.html', 'requirements.txt', 'run.ps1', 'run.sh',
+    'style.css', 'app/index.html', 'mobile.html', 'requirements.txt', 'run.ps1', 'run.sh',
     'install.ps1', 'install.sh', 'FREECLIPPING-AGENT-SETUP-PROMPT.txt', 'FreeClipping-Setup.bat',
     'action.py', 'aiparts.py', 'brands.py', 'bundles.py', 'captions.py', 'captions_yt.py',
     'creators.py', 'curation.py', 'encoders.py', 'excite.py', 'facecam_detect.py',

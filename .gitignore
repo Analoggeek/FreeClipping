@@ -64,3 +64,5 @@ __pycache__/
 !tools/offline/
 !tools/offline/*.py
 !docs/*.png
+!app/
+!app/*

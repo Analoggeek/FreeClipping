@@ -150,7 +150,7 @@ class Languages(unittest.TestCase):
             self.assertFalse(languages.valid(bad), bad)
 
     def test_menu_matches_the_list(self):
-        html = (Path(__file__).resolve().parent.parent / 'index.html').read_text(encoding='utf-8')
+        html = (Path(__file__).resolve().parent.parent / 'app' / 'index.html').read_text(encoding='utf-8')
         start = html.index('id="language"')
         menu = html[start:html.index('</select>', start)]
         for code, _, _ in languages.MORE:
