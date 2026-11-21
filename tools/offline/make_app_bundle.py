@@ -88,6 +88,7 @@ PLIST = '''<?xml version="1.0" encoding="UTF-8"?>
   <key>CFBundleExecutable</key><string>FreeClipping</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleIconFile</key><string>AppIcon.icns</string>
+  <key>CFBundleDescription</key><string>Turn long YouTube, Twitch and Kick videos into captioned 9:16 clips. Free, local, private.</string>
   <key>CFBundleURLTypes</key>
   <array>
     <dict><key>CFBundleURLName</key><string>io.github.analoggeek.freeclipping</string><key>CFBundleURLSchemes</key><array><string>freeclipping</string></array></dict>

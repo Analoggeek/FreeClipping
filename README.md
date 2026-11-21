@@ -87,7 +87,7 @@ For macOS, the app ships as a **self-contained `.app` bundle** — it embeds the
 
 Self-contained zips — the app **and every dependency are baked in**. No downloads required.
 
-* **macOS (Apple Silicon):** `FreeClipping-Offline-macOS-arm64.zip` (~217 MB) — unzip, then run the `.sh`. Installs to `~/FreeClipping` and creates `~/Applications/FreeClipping.app` (with the 3D bolt icon).
+* **macOS (Apple Silicon):** `FreeClipping-Offline-macOS-arm64.zip` (~217 MB) — unzip, then run the `.sh`. Installs to `~/FreeClipping` and creates `~/Applications/FreeClipping.app` (with the 3D icon).
 * **macOS (Intel):** `FreeClipping-Offline-macOS-x64.zip` (~233 MB) — same as above for Intel Macs.
 * **Windows (64-bit):** `FreeClipping-Offline-Windows-x64.zip` — unzip, double-click the `.bat`. Installs to `%LOCALAPPDATA%\FreeClipping` and creates a desktop shortcut with the 3D icon.
 

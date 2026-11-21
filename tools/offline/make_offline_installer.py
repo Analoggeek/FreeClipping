@@ -187,6 +187,7 @@ cat > "$BUNDLE/Contents/Info.plist" <<'EOF3'
   <key>CFBundleExecutable</key><string>FreeClipping</string>
   <key>CFBundlePackageType</key><string>APPL</string>
   <key>CFBundleIconFile</key><string>AppIcon.icns</string>
+  <key>CFBundleDescription</key><string>Turn long YouTube, Twitch and Kick videos into captioned 9:16 clips. Free, local, private.</string>
   <key>NSHighResolutionCapable</key><true/>
 </dict></plist>
 EOF3
@@ -299,7 +300,7 @@ $desktop = [Environment]::GetFolderPath('Desktop')
 $sh = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desktop "FreeClipping.lnk"))
 $sh.TargetPath = $startBat
 $sh.WorkingDirectory = $InstallDir
-$sh.Description = "FreeClipping - captioned 9:16 clips"
+$sh.Description = "FreeClipping - Turn long YouTube, Twitch and Kick videos into captioned 9:16 clips, on your own PC"
 if (Test-Path $iconIco) { $sh.IconLocation = "$iconIco,0" }
 $sh.Save()
 
