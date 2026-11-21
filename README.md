@@ -71,19 +71,20 @@ FreeClipping uses an intelligent hybrid audio-visual heuristic pipeline to pinpo
 
 ---
 
-### Offline installers (macOS + Windows, no internet needed)
+### Offline installers (macOS Intel + Apple Silicon + Windows, no internet needed)
 
-Self-contained installers — the app **and every dependency are baked in**. No downloads required.
+Self-contained zips — the app **and every dependency are baked in**. No downloads required.
 
-* **macOS (Apple Silicon):** `FreeClipping-Offline-Setup-macOS-arm64.sh` — double-click/`chmod +x`, then run it. Installs to `~/FreeClipping` and creates `~/Applications/FreeClipping.app` (with the 3D bolt icon).
-* **Windows (64-bit):** `FreeClipping-Offline-Setup-Windows-x64.bat` — double-click it. Installs to `%LOCALAPPDATA%\FreeClipping` and creates a desktop shortcut with the 3D icon.
+* **macOS (Apple Silicon):** `FreeClipping-Offline-macOS-arm64.zip` (~217 MB) — unzip, then run the `.sh`. Installs to `~/FreeClipping` and creates `~/Applications/FreeClipping.app` (with the 3D bolt icon).
+* **macOS (Intel):** `FreeClipping-Offline-macOS-x64.zip` (~233 MB) — same as above for Intel Macs.
+* **Windows (64-bit):** `FreeClipping-Offline-Windows-x64.zip` — unzip, double-click the `.bat`. Installs to `%LOCALAPPDATA%\FreeClipping` and creates a desktop shortcut with the 3D icon.
 
 > Requires **Python 3.12** already installed (`python3.12` / [python.org](https://www.python.org/downloads/)). The offline installer installs nothing system-wide — it only builds the app's virtual environment with the embedded wheelhouse.
 
 Download the installers from [GitHub Releases](https://github.com/Analoggeek/FreeClipping/releases) or build them yourself:
 
 ```bash
-python3 tools/offline/make_offline_installer.py        # builds dist/*.sh + dist/*.bat + dist/*.ps1
+python3 tools/offline/make_offline_installer.py        # builds dist/*.zip + the raw .sh/.bat/.ps1
 ```
 
 ---

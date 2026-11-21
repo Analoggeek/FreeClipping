@@ -3,8 +3,14 @@
 
 Emits (into dist/):
   FreeClipping-Offline-Setup-macOS-arm64.sh      - self-extracting macOS Apple Silicon installer
+  FreeClipping-Offline-Setup-macOS-x64.sh        - self-extracting macOS Intel (x86_64) installer
   FreeClipping-Offline-Setup-Windows-x64.ps1     - Windows 64-bit engine (base64-embedded payload)
   FreeClipping-Offline-Setup-Windows-x64.bat     - Windows one-click wrapper (double-click this)
+
+Plus the same payloads as zip files (with +x preserved for the .sh):
+  FreeClipping-Offline-macOS-arm64.zip           - contains the .sh
+  FreeClipping-Offline-macOS-x64.zip             - contains the .sh
+  FreeClipping-Offline-Windows-x64.zip           - contains the .bat + .ps1
 
 Payloads embed the app source, icons and every dependency as binary wheels - NO network needed.
 
@@ -108,7 +114,7 @@ def build_payload_tar(tmp, app_zip, wheelhouse_zip):
 
 # ---------------- macOS .sh ----------------
 MAC_SH_TEMPLATE = r'''#!/usr/bin/env bash
-# FreeClipping OFFLINE installer for macOS (Apple Silicon) - self-contained.
+# FreeClipping OFFLINE installer for __MAC_ARCH_LABEL__ - self-contained.
 # Built by tools/offline/make_offline_installer.py - no internet needed.
 set -euo pipefail
 
@@ -310,11 +316,12 @@ Write-Host "  Cleaning up..."
 Remove-Item -Path $tmp -Recurse -Force
 '''
 
-def write_installer(tmp, out_name, is_mac):
+def write_installer(tmp, out_name, is_mac, mac_arch=None):
     payload = build_payload_tar(tmp, tmp / 'app.zip', tmp / 'wheelhouse.zip')
     b64 = base64.b64encode(payload.read_bytes()).decode('ascii')
     if is_mac:
-        template = MAC_SH_TEMPLATE.replace('__PAYLOAD_B64__', b64, 1)
+        template = (MAC_SH_TEMPLATE.replace('__PAYLOAD_B64__', b64, 1)
+                    .replace('__MAC_ARCH_LABEL__', mac_arch or 'macOS', 1))
         out_path = out_name
         out_path.write_text(template)
         out_path.chmod(0o755)
@@ -328,9 +335,28 @@ def write_installer(tmp, out_name, is_mac):
         out_path.write_text(body)
         print(f'  {out_path.name}: {out_path.stat().st_size / 1e6:.1f} MB')
 
+def zip_installer(files, zip_path, mac_mode=None):
+    """Zip the installer payloads. mac .sh files keep their +x bit in the zip."""
+    from zipfile import ZipFile, ZipInfo
+    import time
+    zi = ZipFile(zip_path, 'w')
+    if mac_mode is not None:
+        for f in files:
+            fi = f.stat()
+            info = ZipInfo(f.name, (time.localtime(fi.st_mtime)[:6]))
+            info.external_attr = (0o755 << 16) if mac_mode else 0
+            info.create_system = 3
+            zi.writestr(info, f.read_bytes())
+    else:
+        for f in files:
+            zi.write(f, f.name)
+    zi.close()
+    print(f'  {zip_path.name}: {zip_path.stat().st_size / 1e6:.1f} MB')
+
 def main():
     ap = argparse.ArgumentParser(description='Build FreeClipping offline installers')
     ap.add_argument('--skip-mac', action='store_true')
+    ap.add_argument('--skip-mac-x64', action='store_true')
     ap.add_argument('--skip-windows', action='store_true')
     args = ap.parse_args()
     DIST.mkdir(exist_ok=True)
@@ -340,10 +366,22 @@ def main():
         build_app_zip(tmp)
 
         if not args.skip_mac:
+            mac_sh = []
+            # Apple Silicon (arm64)
             build_wheelhouse_zip(tmp, 'macosx_11_0_arm64', 'macos-arm64')
-            # swap names so write_installer uses a stable wheelhouse.zip
             shutil.copy(tmp / 'wheelhouse-macos-arm64.zip', tmp / 'wheelhouse.zip')
-            write_installer(tmp, DIST / 'FreeClipping-Offline-Setup-macOS-arm64.sh', True)
+            arc = DIST / 'FreeClipping-Offline-Setup-macOS-arm64.sh'
+            write_installer(tmp, arc, True, 'macOS Apple Silicon')
+            mac_sh.append((arc, 'FreeClipping-Offline-macOS-arm64.zip'))
+            # Intel (x86_64)
+            if not args.skip_mac_x64:
+                build_wheelhouse_zip(tmp, 'macosx_11_0_x86_64', 'macos-x64')
+                shutil.copy(tmp / 'wheelhouse-macos-x64.zip', tmp / 'wheelhouse.zip')
+                x64_arc = DIST / 'FreeClipping-Offline-Setup-macOS-x64.sh'
+                write_installer(tmp, x64_arc, True, 'macOS Intel (x86_64)')
+                mac_sh.append((x64_arc, 'FreeClipping-Offline-macOS-x64.zip'))
+            for sh, zip_name in mac_sh:
+                zip_installer([sh], DIST / zip_name, mac_mode=True)
         if not args.skip_windows:
             build_wheelhouse_zip(tmp, 'win_amd64', 'windows-x64')
             shutil.copy(tmp / 'wheelhouse-windows-x64.zip', tmp / 'wheelhouse.zip')
@@ -351,8 +389,8 @@ def main():
             WIN_BAT_PATH = DIST / 'FreeClipping-Offline-Setup-Windows-x64.bat'
             WIN_BAT_PATH.write_text(WIN_BAT_TEMPLATE)
             print(f'  {WIN_BAT_PATH.name}: {WIN_BAT_PATH.stat().st_size / 1e6:.1f} MB')
-            # hide the .bat from the listing above - it was created, PWD shows both
-            print(f'  FreeClipping-Offline-Setup-Windows-x64.ps1: {(DIST / "FreeClipping-Offline-Setup-Windows-x64.ps1").stat().st_size / 1e6:.1f} MB')
+            zip_installer([WIN_BAT_PATH, DIST / 'FreeClipping-Offline-Setup-Windows-x64.ps1'],
+                          DIST / 'FreeClipping-Offline-Windows-x64.zip')
 
 if __name__ == '__main__':
     main()
