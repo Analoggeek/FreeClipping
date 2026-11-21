@@ -62,7 +62,7 @@ def text_file(id:str,kind:str):
  if not id.isalnum() or kind not in ('srt','ass','vtt'):raise HTTPException(404)
  p=DATA/(id+'.'+kind)
  if not p.exists():raise HTTPException(404)
- return FileResponse(p,filename='digirg-cloud-'+id+'.'+kind)
+ return FileResponse(p,filename='freeclipping-'+id+'.'+kind)
 @app.get('/library')
 def library():
  records=[]
@@ -72,7 +72,7 @@ def library():
   try:
    j=json.loads(f.read_text());result=j.get('result',{})
    if result.get('status')=='done' and not j.get('superseded_by') and (DATA/(f.stem+'.mp4')).exists():
-    records.append({'id':f.stem,'title':j.get('settings',{}).get('title') or 'DigiRG Cloud clip','created':f.stat().st_mtime,'meta':result.get('meta',{}),'settings':j.get('settings',{}),'srt':bool(result.get('srt')) and (DATA/(f.stem+'.srt')).exists(),**app.reedit_metadata(f.stem,j,groups)})
+    records.append({'id':f.stem,'title':j.get('settings',{}).get('title') or 'FreeClipping clip','created':f.stat().st_mtime,'meta':result.get('meta',{}),'settings':j.get('settings',{}),'srt':bool(result.get('srt')) and (DATA/(f.stem+'.srt')).exists(),**app.reedit_metadata(f.stem,j,groups)})
   except (ValueError,OSError):pass
  return sorted(records,key=lambda j:j['created'],reverse=True)
 
@@ -493,18 +493,6 @@ def live_stop(lid:str):
  if lid not in LIVE:raise HTTPException(404,'Live session not found.')
  LIVE[lid].stop();return {'ok':True}
 
-@app.get('/donate')
-def donate():
- """Optional donate links (donate.json or NEONCLIPPING_DONATE_RAZORPAY / NEONCLIPPING_DONATE_PAYPAL). Only https links are served; nothing is unlocked by donating."""
- cfg={}
- try:cfg=json.loads((ROOT/'donate.json').read_text(encoding='utf-8'))
- except (OSError,ValueError):pass
- out={}
- for k in ('payu','razorpay','paypal'):
-  v=str(os.environ.get('NEONCLIPPING_DONATE_'+k.upper()) or cfg.get(k) or '').strip()
-  if v.startswith('https://') and len(v)<300 and ' ' not in v:out[k]=v
- return out
-
 @app.post('/feedback')
 def feedback(b:dict):
  """A star rating (1-5) for a finished clip. Stored locally; the scoring weights are refitted from the ratings (learn.py)."""
@@ -538,7 +526,7 @@ def report_info(note:str=''):
 @app.get('/report/download')
 def report_download(note:str=''):
  from fastapi.responses import PlainTextResponse
- return PlainTextResponse(report.diagnostics(note,errors=40),headers={'Content-Disposition':'attachment; filename="digirg-cloud-diagnostics.txt"'})
+ return PlainTextResponse(report.diagnostics(note,errors=40),headers={'Content-Disposition':'attachment; filename="freeclipping-diagnostics.txt"'})
 @app.post('/report/send')
 def report_send(b:dict):
  if b.get('consent') is not True:raise HTTPException(400,'Tick the box to allow sending first.')

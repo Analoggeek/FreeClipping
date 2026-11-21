@@ -9,8 +9,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from e2e import R
 
-SITES = ['https://digirgcloud.github.io/DIGIRGCLIPPINGFREE/']
-UA = {'User-Agent': 'Mozilla/5.0 DigiRGCloud-linktest'}
+SITES = ['https://analoggeek.github.io/freeclipping/']
+UA = {'User-Agent': 'Mozilla/5.0 FreeClipping-linktest'}
 
 
 def get(url, method='GET', timeout=40):
@@ -61,7 +61,7 @@ def run():
             continue
         html = body.decode('utf-8', 'ignore')
         R.check(g, f'{site} has title, download button, demo video', lambda html=html: (
-            '<title>' in html and 'NeonClipping-Setup.bat' in html and '<video' in html, ''))
+            '<title>' in html and 'FreeClipping-Setup.bat' in html and '<video' in html, ''))
         for u in links(html, site):
             host = u.split('/')[2]
             if host in ('www.instagram.com',):          # login walls answer 200/302/429 inconsistently
@@ -70,44 +70,27 @@ def run():
             if code in (403, 405, 0):                    # some hosts refuse HEAD
                 code = get(u)[0]
             R.check(g, f'link {u[:90]}', lambda code=code: (code == 200, code))
-        R.check(g, f'{site} no leftover github.io / edtrust names', lambda html=html, site=site: (
-            'edtrustguru' not in html.lower(), ''))
-    # the two copies of the page must be the same except the back link
-    a = get(SITES[0])[1].decode('utf-8', 'ignore')
-    b = get(SITES[1])[1].decode('utf-8', 'ignore')
-    def norm(x):
-        x = x.replace(chr(13), '')
-        x = x.replace('<a href="https://editorsgurukul.com/">&larr; Editors Gurukul</a> ' + chr(183) + ' ', '')
-        x = re.sub(r'<script[^>]*cloudflareinsights[^>]*></script>', '', x)       # Cloudflare injects its own analytics tag
-        return x.replace(chr(10), '')
-    R.check(g, 'both site copies carry the same content (only the back link and line endings differ)', lambda: (
-        norm(a) == norm(b), f'{len(a)} vs {len(b)} bytes'))
+        R.check(g, f'{site} has no leftover other-brand names', lambda html=html: (
+            'digirg' not in html.lower() and '@ft_raj_check' not in html.lower() and 'instagram.com' not in html.lower() and 'ig' not in re.findall(r'class="ig"', html), ''))
     # release assets
-    rel = json.loads(get('https://api.github.com/repos/DIGIRGCLOUD/DIGIRGCLIPPINGFREE/releases/latest')[1] or b'{}')
+    rel = json.loads(get('https://api.github.com/repos/Analoggeek/FreeClipping/releases/latest')[1] or b'{}')
     names = {x['name'] for x in rel.get('assets', [])}
-    for need in ('DigiRGCloud-Setup.bat', 'install.ps1', 'install.sh', 'DigiRGCloud-Guide-EN-HI.pdf', 'DIGIRGCLOUD-AGENT-SETUP-PROMPT.txt'):
+    for need in ('FreeClipping-Setup.bat', 'install.ps1', 'install.sh', 'FreeClipping-Guide-EN-HI.pdf', 'FREECLIPPING-AGENT-SETUP-PROMPT.txt'):
         R.check(g, f'release asset {need}', lambda need=need: (need in names, sorted(names)))
-    code = get('https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE/releases/latest/download/DigiRGCloud-Setup.bat')[0]
+    code = get('https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Setup.bat')[0]
     R.check(g, 'one-click download URL resolves', lambda: (code == 200, code))
     # the .bat the site serves is the one in the repo
-    raw = get('https://raw.githubusercontent.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE/main/install.ps1')
+    raw = get('https://raw.githubusercontent.com/Analoggeek/FreeClipping/main/install.ps1')
     R.check(g, 'raw install.ps1 reachable (the .bat downloads it when run alone)', lambda: (raw[0] == 200 and b'param(' in raw[1].lower(), raw[0]))
     R.check(g, 'install.ps1 is ASCII only (no encoding surprises in PowerShell 5.1)', lambda: (all(c < 128 for c in raw[1]), ''))
     # PDF
-    pdf = get('https://digirgcloud.github.io/DIGIRGCLIPPINGFREE/DigiRGCloud-Guide-EN-HI.pdf')
+    pdf = get('https://analoggeek.github.io/freeclipping/FreeClipping-Guide-EN-HI.pdf')
     R.check(g, 'guide PDF is a PDF with pages', lambda: (pdf[1][:4] == b'%PDF' and pdf[1].count(b'/Type /Page') >= 6, len(pdf[1])))
     # agent prompt
-    pr = get('https://digirgcloud.github.io/DIGIRGCLIPPINGFREE/DIGIRGCLOUD-AGENT-SETUP-PROMPT.txt')
+    pr = get('https://analoggeek.github.io/freeclipping/FREECLIPPING-AGENT-SETUP-PROMPT.txt')
     t = pr[1].decode('utf-8', 'ignore')
     R.check(g, 'agent prompt has the 9 steps + simple-Hindi explanation + stop rules', lambda: (
         len(t) > 4000 and 'Hindi' in t and 'Step 9' in t or 'STEP 9' in t, len(t)))
-    # editorsgurukul integration
-    for u, needle in (('https://editorsgurukul.com/free-resources', 'neonclipping'), ('https://editorsgurukul.com/free-websites/', 'neonclipping'),
-                      ('https://editorsgurukul.com/free-websites/neonclipping/', 'NeonClipping')):
-        code, body, _ = get(u)
-        R.check(g, f'{u} lists NeonClipping', lambda code=code, body=body, needle=needle: (code == 200 and needle.lower() in body.decode('utf-8', 'ignore').lower(), code))
-    sm = get('https://editorsgurukul.com/sitemap-0.xml')[1].decode('utf-8', 'ignore')
-    R.check(g, 'sitemap lists /neonclipping/', lambda: ('/neonclipping/' in sm, ''))
 
 
 if __name__ == '__main__':

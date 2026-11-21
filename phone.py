@@ -1,10 +1,10 @@
-"""Phone remote: use DigiRG Cloud from a phone on the same Wi-Fi.
+"""Phone remote: use FreeClipping from a phone on the same Wi-Fi.
 
 The heavy work (recording, speech, rendering) always happens on the PC. The phone is a remote control and viewer:
 paste a live link, watch the chat-hype meter, press "clip the last 20 s", and play / save the clips.
 
 Safety rules (this opens the tool to your home network, so they are strict):
-  * It is OFF unless DigiRG Cloud is started with NEONCLIPPING_LAN=1.
+  * It is OFF unless FreeClipping is started with NEONCLIPPING_LAN=1.
     Without it the server only listens on 127.0.0.1 and nothing here is reachable.
   * Anything that is not the PC itself needs a 6-digit PIN (shown only on the PC, stored in data/phone.json). After 5 wrong
     tries an address is locked for 10 minutes. A correct PIN gives an HttpOnly cookie.
@@ -25,7 +25,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, Response
 
 LOCAL = ('127.0.0.1', '::1', 'localhost')
 ALLOW = ('/m', '/manifest.webmanifest', '/phone-icon.svg', '/live', '/live-active', '/library', '/media', '/text', '/make', '/status',
-         '/clips', '/feedback', '/creators', '/donate', '/healthz', '/assets')
+         '/clips', '/feedback', '/creators', '/healthz', '/assets')
 MAX_TRIES, LOCK_SECONDS = 5, 600
 COOKIE = 'nc_phone'
 
@@ -151,7 +151,7 @@ def attach(app, data, root):
 
     @app.get('/manifest.webmanifest')
     def manifest():
-        return JSONResponse({'name': 'DigiRG Cloud', 'short_name': 'DigiRG', 'start_url': '/m', 'scope': '/', 'display': 'standalone',
+        return JSONResponse({'name': 'FreeClipping', 'short_name': 'FreeClipping', 'start_url': '/m', 'scope': '/', 'display': 'standalone',
                              'background_color': '#07090e', 'theme_color': '#07090e',
                              'icons': [{'src': '/phone-icon.svg', 'sizes': 'any', 'type': 'image/svg+xml', 'purpose': 'any'}]},
                             media_type='application/manifest+json')

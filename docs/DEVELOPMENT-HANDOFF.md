@@ -1,6 +1,6 @@
 # Native layout and saved-edit update — 19 November 2026
 
-DigiRG Cloud keeps its own modern cyber interface and independent engine. Competitor reference applications are not required, started or linked by the product.
+FreeClipping keeps its own modern cyber interface and independent engine. Competitor reference applications are not required, started or linked by the product.
 
 ## Shipped changes
 

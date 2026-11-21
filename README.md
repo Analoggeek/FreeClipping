@@ -1,37 +1,23 @@
-# ☁️ DigiRG Cloud - AI Video Clip Engine
+# ⚡ FreeClipping — Free AI Video Clip Engine
 
 **Paste any link. Get captioned, viral 9:16 vertical clips in about two minutes. Free, local, private, and open-source.**
 
-DigiRG Cloud transforms long YouTube, Twitch, and Kick videos (or local MP4s) into high-impact vertical clips with AI-generated titles, hooks, and word-timed subtitles for Instagram Reels, YouTube Shorts, and TikTok. Everything runs entirely on your local machine: no accounts, no subscriptions, and zero video data uploaded to external servers.
+FreeClipping turns long YouTube, Twitch, and Kick videos (or local MP4s) into high-impact vertical clips with AI-generated titles, hooks, and word-timed subtitles for Instagram Reels, YouTube Shorts, and TikTok. Everything runs entirely on your local machine: no accounts, no subscriptions, and zero video data uploaded to external servers.
 
-[![Star on GitHub](https://img.shields.io/github/stars/DIGIRGCLOUD/DIGIRGCLIPPINGFREE?style=for-the-badge&logo=github&label=Star%20on%20GitHub)](https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE)
-[![Donate ₹10](https://img.shields.io/badge/Donate-₹10%20(PayU)-10b981?style=for-the-badge&logo=googlepay&logoColor=white)](https://u.payu.in/PAYUMN/yrw25eGEUES4)
-[![Follow @ft_raj_check](https://img.shields.io/badge/Instagram-%40ft__raj__check-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/ft_raj_check/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-00f0ff?style=for-the-badge)](LICENSE)
 [![Python 3.10--3.13](https://img.shields.io/badge/Python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.13-3b82f6?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![Star on GitHub](https://img.shields.io/github/stars/Analoggeek/FreeClipping?style=for-the-badge&logo=github&label=Star%20on%20GitHub)](https://github.com/Analoggeek/FreeClipping)
 
 ---
 
-### 🌟 Developed by DigiRG Cloud
-Created and maintained by **[DigiRG Cloud](https://www.instagram.com/ft_raj_check/)**.  
-Follow on Instagram: **[@ft_raj_check](https://www.instagram.com/ft_raj_check/)** for updates, tools, and tutorials.  
-If DigiRG Cloud saves you time, please give this repository a ⭐ **Star**!
-
----
-
-### ❤️ Support This Free Tool (Donate At Least ₹10)
-DigiRG Cloud is **100% free and open-source**. There are no paywalls, subscriptions, or watermarks.
-
-Agar is tool ne aapka keemti waqt bachaya ho, ya video clipping aasan ki ho, to please **at least ₹10 (a cup of tea ☕)** donate karke is free tool ko zinda rakhne me support kare:
-
-👉 **[⚡ Click Here to Donate ₹10 via PayU / UPI (GPay, PhonePe, Paytm, Cards)](https://u.payu.in/PAYUMN/yrw25eGEUES4)**  
-*Aapka chhota sa support hamare liye bohot bada hausla aur taqat hai! 🙏*
+### ⚡ What it is
+FreeClipping is a **free, open-source, local-first** AI video clipping tool built by [Analoggeek](https://github.com/Analoggeek).
 
 ---
 
 ## ⚡ How It Works
 
-DigiRG Cloud uses an intelligent hybrid audio-visual heuristic pipeline to pinpoint peak moments in seconds:
+FreeClipping uses an intelligent hybrid audio-visual heuristic pipeline to pinpoint peak moments in seconds:
 
 1. **Audio First Analysis:** Downloads audio stream instantly (e.g. ~80 MB for an 85-minute stream in seconds).
 2. **Instant Transcript:** Leverages word-timed YouTube captions or falls back to local Whisper speech recognition.
@@ -53,7 +39,7 @@ DigiRG Cloud uses an intelligent hybrid audio-visual heuristic pipeline to pinpo
   - *Clean* (Minimal, readable modern subtitles)
 - **52 Languages & Hinglish:** Native support for English, Hindi, Hinglish (Hindi written in English letters), Spanish, German, French, and 46+ other languages.
 - **Live Stream Clipping:** Automatically detects chat spikes on active Twitch and YouTube live streams to cut clips in real-time.
-- **Creator Radar:** Add streamer handles; DigiRG Cloud monitors their channels and automatically records and clips viral moments when they go live.
+- **Creator Radar:** Add streamer handles; FreeClipping monitors their channels and automatically records and clips viral moments when they go live.
 - **Phone Remote Companion:** Connect your phone over local Wi-Fi to monitor live clips, trigger instant trims, and preview videos directly from your mobile browser.
 - **100% Private & Local:** The server binds strictly to `127.0.0.1`. No telemetry, no API fees, no subscriptions.
 
@@ -72,11 +58,11 @@ DigiRG Cloud uses an intelligent hybrid audio-visual heuristic pipeline to pinpo
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE.git
-   cd DIGIRGCLIPPINGFREE
+   git clone https://github.com/Analoggeek/FreeClipping.git
+   cd FreeClipping
    ```
 
-2. **Launch DigiRG Cloud:**
+2. **Launch FreeClipping:**
    ```bash
    chmod +x run.sh
    ./run.sh
@@ -89,11 +75,11 @@ DigiRG Cloud uses an intelligent hybrid audio-visual heuristic pipeline to pinpo
 
 1. **Clone the repository:**
    ```powershell
-   git clone https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE.git
-   cd DIGIRGCLIPPINGFREE
+   git clone https://github.com/Analoggeek/FreeClipping.git
+   cd FreeClipping
    ```
 
-2. **Launch DigiRG Cloud:**
+2. **Launch FreeClipping:**
    ```powershell
    .\run.ps1
    ```
@@ -112,16 +98,20 @@ Open the displayed local IP address (e.g. `http://192.168.1.XX:8770/m`) on your 
 
 ## 🤝 Community & Support
 
-- **Instagram:** [@ft_raj_check](https://www.instagram.com/ft_raj_check/)
-- **Bug Reports & Feature Requests:** Open an issue on GitHub!
+- **Issues & Feature Requests:** Open an issue on [GitHub](https://github.com/Analoggeek/FreeClipping/issues)!
+- **Report bugs:** Use the **Report a problem** option inside the app — it pre-fills the boxes and removes links, user names, e-mails and IPs.
 
 ---
 
 ## 🔍 Topics & Search Keywords
-`digirg-cloud` · `digirgclippingfree` · `ai-video-clipper` · `opus-clip-alternative` · `shorts-generator` · `reels-maker` · `tiktok-generator` · `auto-subtitles` · `hinglish-captions` · `twitch-clipper` · `open-source` · `faster-whisper` · `yt-dlp` · `fastapi` · `opencv` · `local-ai` · `video-highlight-generator`
+`freeclipping` · `free-video-clipper` · `ai-video-clipper` · `free-ai-video-clipper` · `video-highlight-generator` · `reels-maker` · `shorts-generator` · `tiktok-generator` · `youtube-shorts-maker` · `instagram-reels-maker` · `auto-subtitles` · `hinglish-captions` · `twitch-clipper` · `vertical-clips` · `local-ai` · `fastapi` · `faster-whisper` · `yt-dlp` · `open-source` · `free-open-source`
 
 ---
 
 ## 📄 License
 
 Distributed under the MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+Made with ❤️ by [Analoggeek](https://github.com/Analoggeek)

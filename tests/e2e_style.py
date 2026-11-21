@@ -67,7 +67,7 @@ def run():
     R.check(G, 'upload rejects a non-media file', lambda: (lambda x: (x.get('status') == 400, x))(upload_asset(OUT / 'edit_sample.mp4' if False else Path(__file__), 'image')))
     R.check(G, 'upload rejects unknown kind', lambda: (upload_asset(img, 'zip').get('status') in (400, 422), ''))
     for t in ('x_light', 'x_dark', 'tiktok_hook', 'breaking_news'):
-        R.check(G, f'template {t}', lambda t=t: render({'template': t, 'hook': 'The strength of being misunderstood is that people never see it coming', 'tpl_name': 'DIGIRG CLOUD', 'tpl_handle': 'ft_raj_check'}, start, name='tpl_' + t)[:2])
+        R.check(G, f'template {t}', lambda t=t: render({'template': t, 'hook': 'The strength of being misunderstood is that people never see it coming', 'tpl_name': 'FreeClipping', 'tpl_handle': 'analoggeek'}, start, name='tpl_' + t)[:2])
     R.check(G, 'template rejects unknown name', lambda: (api('/export', {'id': SID, 'start': start, 'end': start + 5, 'layout': 'stack', **BOX, 'template': 'zzz'})[0] == 400, ''))
     for mode in ('blur', 'color', 'gradient'):
         R.check(G, f'background card {mode} + padding + rounded corners', lambda mode=mode: render({'bg_mode': mode, 'padding': 8, 'radius': 40, 'bg_color': '#112244', 'bg_color2': '#ff4ba5'}, start, name='bg_' + mode)[:2])
@@ -77,7 +77,7 @@ def run():
     for pos in ('tl', 'tr', 'bl', 'br'):
         R.check(G, f'watermark {pos}', lambda pos=pos: render({'watermark_image': a_img['id'], 'watermark_pos': pos, 'watermark_size': 14, 'watermark_opacity': .8}, start, name='wm_' + pos)[:2])
     R.check(G, 'credit line', lambda: render({'credit': 'Clip: Kai Cenat'}, start, name='credit')[:2])
-    R.check(G, 'outro ribbon in the last 3 s', lambda: render({'outro_text': 'FOLLOW @ft_raj_check', 'outro_seconds': 3}, start, dur=8, name='outro')[:2])
+    R.check(G, 'outro ribbon in the last 3 s', lambda: render({'outro_text': 'FOLLOW analoggeek', 'outro_seconds': 3}, start, dur=8, name='outro')[:2])
 
     def level(file, ss):
         r = subprocess.run(['ffmpeg', '-v', 'info', '-ss', str(ss), '-t', '1.5', '-i', str(DATA / (file + '.mp4')), '-vn', '-af', 'volumedetect', '-f', 'null', '-'],

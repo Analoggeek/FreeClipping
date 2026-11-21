@@ -1,8 +1,8 @@
 @echo off
 setlocal
-title DigiRG Cloud Setup
+title FreeClipping Setup
 echo.
-echo   DigiRG Cloud setup shuru ho raha hai...
+echo   FreeClipping setup shuru ho raha hai...
 echo.
 set "F=%~dp0install.ps1"
 if exist "%F%" goto :run

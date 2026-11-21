@@ -1,4 +1,4 @@
-"""DigiRG Cloud's native layout geometry, shared by browser preview and FFmpeg."""
+"""FreeClipping's native layout geometry, shared by browser preview and FFmpeg."""
 import math
 
 CATALOG = [

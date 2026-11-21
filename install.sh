@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# DigiRG Cloud installer for macOS and Linux.
+# FreeClipping installer for macOS and Linux.
 # Needs: python3 (3.10+), ffmpeg, curl, unzip.
-# Everything goes into ~/DigiRGCloud. Delete that folder to uninstall.
+# Everything goes into ~/FreeClipping. Delete that folder to uninstall.
 set -e
-DIR="${DIGIRGCLOUD_DIR:-$HOME/DigiRGCloud}"
-ZIP="${DIGIRGCLOUD_ZIP:-https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE/archive/refs/heads/main.zip}"
+DIR="${NEONCLIPPING_DIR:-$HOME/FreeClipping}"
+ZIP="${NEONCLIPPING_ZIP:-https://github.com/Analoggeek/FreeClipping/archive/refs/heads/main.zip}"
 say() { printf '\n==> %s\n' "$1"; }
 need() { command -v "$1" >/dev/null 2>&1 || { echo "Missing: $1. $2"; MISSING=1; }; }
 
@@ -21,7 +21,7 @@ for c in python3.12 python3.11 python3.13 python3.10 python3; do
   if command -v "$c" >/dev/null 2>&1 && "$c" -c 'import sys; sys.exit(0 if (3, 10) <= sys.version_info[:2] <= (3, 13) else 1)' 2>/dev/null; then PY="$c"; break; fi
 done
 if [ -z "$PY" ]; then
-  echo "Your Python is $(python3 --version 2>&1). DigiRG Cloud needs Python 3.10 to 3.13."
+  echo "Your Python is $(python3 --version 2>&1). FreeClipping needs Python 3.10 to 3.13."
   echo "Install one:  macOS: brew install python@3.12     Ubuntu: sudo apt install python3.12 python3.12-venv"
   echo "Then run this installer again."
   exit 1
@@ -29,7 +29,7 @@ fi
 "$PY" -c "import venv" 2>/dev/null || { echo "Missing the venv module (Ubuntu: sudo apt install python3-venv)."; exit 1; }
 echo "OK: $($PY --version), $(ffmpeg -version | head -1 | cut -c1-30)"
 
-say "Step 2/4 - Downloading DigiRG Cloud"
+say "Step 2/4 - Downloading FreeClipping"
 TMP="$(mktemp -d)"
 curl -fsSL "$ZIP" -o "$TMP/nc.zip"
 unzip -q "$TMP/nc.zip" -d "$TMP"
@@ -56,7 +56,7 @@ chmod +x "$DIR/start.sh"
 
 echo
 echo "SETUP COMPLETE."
-echo "Start DigiRG Cloud:  $DIR/start.sh    (then open http://127.0.0.1:8770)"
+echo "Start FreeClipping:  $DIR/start.sh    (then open http://127.0.0.1:8770)"
 echo "Use: 1) paste a video link  2) press 'Make clips'  3) preview and 'Download MP4'."
 [ "${NO_START:-0}" = "1" ] && exit 0
 echo "Starting now..."

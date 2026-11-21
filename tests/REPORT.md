@@ -43,14 +43,12 @@ Generated 2026-11-20 08:56 by tests/make_report.py from tests/report.json.
 | PASS | GET /assets/app.js |  |
 | PASS | GET /assets/style.css |  |
 | PASS | GET /library |  |
-| PASS | GET /donate |  |
 | PASS | GET /feedback/summary |  |
 | PASS | GET /live-active |  |
 | PASS | GET /creators |  |
 | PASS | GET /layouts |  |
 | PASS | /layouts returns 11 layouts with geometry | 11 |
 | PASS | /layouts rejects bad speaker size |  |
-| PASS | donate links are https only | {'razorpay': 'https://rzp.io/rzp/JN41CpW'} |
 | PASS | /make without link or id -> 4xx |  |
 | PASS | /make with bad count -> 400 |  |
 | PASS | /export unknown source -> 400 |  |
@@ -350,30 +348,28 @@ Generated 2026-11-20 08:56 by tests/make_report.py from tests/report.json.
 
 | Result | Check | Evidence |
 |---|---|---|
-| PASS | https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/ loads | 200 19525 bytes |
-| PASS | https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/ has title, download button, demo video |  |
-| PASS | link https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE | 200 |
-| PASS | link https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE/releases/latest/download/NeonClipping-Setup.bat | 200 |
-| PASS | link https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/NEONCLIPPING-AGENT-SETUP-PROMPT.txt | 200 |
-| PASS | link https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/NeonClipping-Guide-EN-HI.pdf | 200 |
-| PASS | link https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/demo-poster.jpg | 200 |
-| PASS | link https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/demo.mp4 | 200 |
-| PASS | link https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/DIGIRGCLIPPINGFREE-ui.jpg | 200 |
-| PASS | link https://rzp.io/rzp/JN41CpW | 200 |
-| PASS | https://DIGIRGCLOUD.github.io/DIGIRGCLIPPINGFREE/ no leftover github.io / edtrust names |  |
-| PASS | https://editorsgurukul.com/DIGIRGCLIPPINGFREE/ loads | 200 19960 bytes |
-| PASS | https://editorsgurukul.com/DIGIRGCLIPPINGFREE/ has title, download button, demo video |  |
-| PASS | link https://editorsgurukul.com/ | 200 |
-| PASS | link https://editorsgurukul.com/DIGIRGCLIPPINGFREE/NEONCLIPPING-AGENT-SETUP-PROMPT.txt | 200 |
-| PASS | link https://editorsgurukul.com/DIGIRGCLIPPINGFREE/NeonClipping-Guide-EN-HI.pdf | 200 |
-| PASS | link https://editorsgurukul.com/DIGIRGCLIPPINGFREE/demo-poster.jpg | 200 |
-| PASS | link https://editorsgurukul.com/DIGIRGCLIPPINGFREE/demo.mp4 | 200 |
-| PASS | link https://editorsgurukul.com/DIGIRGCLIPPINGFREE/DIGIRGCLIPPINGFREE-ui.jpg | 200 |
-| PASS | link https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE | 200 |
-| PASS | link https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE/releases/latest/download/NeonClipping-Setup.bat | 200 |
-| PASS | link https://rzp.io/rzp/JN41CpW | 200 |
+| PASS | https://analoggeek.github.io/freeclipping/ loads | 200 19525 bytes |
+| PASS | https://analoggeek.github.io/freeclipping/ has title, download button, demo video |  |
+| PASS | link https://github.com/Analoggeek/FreeClipping | 200 |
+| PASS | link https://github.com/Analoggeek/FreeClipping/releases/latest/download/NeonClipping-Setup.bat | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/NEONCLIPPING-AGENT-SETUP-PROMPT.txt | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/NeonClipping-Guide-EN-HI.pdf | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/demo-poster.jpg | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/demo.mp4 | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/FreeClippingCLIPPINGFREE-ui.jpg | 200 |
+| PASS | https://analoggeek.github.io/freeclipping/ no leftover github.io / edtrust names |  |
+| PASS | https://analoggeek.github.io/freeclipping/ loads | 200 19960 bytes |
+| PASS | https://analoggeek.github.io/freeclipping/ has title, download button, demo video |  |
+| PASS | link https://analoggeek.github.io/freeclipping/ | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/NEONCLIPPING-AGENT-SETUP-PROMPT.txt | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/NeonClipping-Guide-EN-HI.pdf | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/demo-poster.jpg | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/demo.mp4 | 200 |
+| PASS | link https://analoggeek.github.io/freeclipping/FreeClippingCLIPPINGFREE-ui.jpg | 200 |
+| PASS | link https://github.com/Analoggeek/FreeClipping | 200 |
+| PASS | link https://github.com/Analoggeek/FreeClipping/releases/latest/download/NeonClipping-Setup.bat | 200 |
 | PASS | link https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d873017920 | 200 |
-| PASS | https://editorsgurukul.com/DIGIRGCLIPPINGFREE/ no leftover github.io / edtrust names |  |
+| PASS | https://analoggeek.github.io/freeclipping/ no leftover github.io / edtrust names |  |
 | PASS | both site copies carry the same content (only the back link and line endings differ) | 19446 vs 19880 bytes |
 | PASS | release asset NeonClipping-Setup.bat | ['NEONCLIPPING-AGENT-SETUP-PROMPT.txt', 'NeonClipping-Guide-EN-HI.pdf', 'NeonClipping-Setup.bat', 'install.ps1', 'install.sh'] |
 | PASS | release asset install.ps1 | ['NEONCLIPPING-AGENT-SETUP-PROMPT.txt', 'NeonClipping-Guide-EN-HI.pdf', 'NeonClipping-Setup.bat', 'install.ps1', 'install.sh'] |
@@ -385,7 +381,7 @@ Generated 2026-11-20 08:56 by tests/make_report.py from tests/report.json.
 | PASS | install.ps1 is ASCII only (no encoding surprises in PowerShell 5.1) |  |
 | PASS | guide PDF is a PDF with pages | 963080 |
 | PASS | agent prompt has the 9 steps + simple-Hindi explanation + stop rules | 8091 |
-| PASS | https://editorsgurukul.com/free-resources lists NeonClipping | 200 |
-| PASS | https://editorsgurukul.com/free-websites/ lists NeonClipping | 200 |
-| PASS | https://editorsgurukul.com/free-websites/DIGIRGCLIPPINGFREE/ lists NeonClipping | 200 |
-| PASS | sitemap lists /DIGIRGCLIPPINGFREE/ |  |
+| PASS | https://analoggeek.github.io/freeclipping/free-resources lists NeonClipping | 200 |
+| PASS | https://analoggeek.github.io/freeclipping/free-websites/ lists NeonClipping | 200 |
+| PASS | https://analoggeek.github.io/freeclipping/free-websites/FreeClippingCLIPPINGFREE/ lists NeonClipping | 200 |
+| PASS | sitemap lists /FreeClippingCLIPPINGFREE/ |  |

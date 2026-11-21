@@ -1,12 +1,12 @@
 """Builds guide.html (then print to PDF with headless Chrome).
-Keeps the agent prompt in sync with ../DIGIRGCLOUD-AGENT-SETUP-PROMPT.txt. Styles live in style.css next to this file."""
+Keeps the agent prompt in sync with ../FREECLIPPING-AGENT-SETUP-PROMPT.txt. Styles live in style.css next to this file."""
 import html
 from pathlib import Path
 
 here = Path(__file__).parent
-prompt = (here.parent / 'DIGIRGCLOUD-AGENT-SETUP-PROMPT.txt').read_text(encoding='utf-8').strip()
+prompt = (here.parent / 'FREECLIPPING-AGENT-SETUP-PROMPT.txt').read_text(encoding='utf-8').strip()
 css = (here / 'style.css').read_text(encoding='utf-8')
-GH = 'github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE'
+GH = 'github.com/Analoggeek/FreeClipping'
 
 
 _count = [0]
@@ -14,7 +14,7 @@ _count = [0]
 
 def foot(_unused=None):
     _count[0] += 1          # pages are built in order, so this is the page number (the cover has none)
-    return f'<div class="foot"><span>DigiRG Cloud · by DigiRG Cloud · ★ Star: {GH}</span><span>{_count[0]}</span></div>'
+    return f'<div class="foot"><span>FreeClipping · by FreeClipping · ★ Star: {GH}</span><span>{_count[0]}</span></div>'
 
 
 def both(en, hi):
@@ -38,8 +38,8 @@ pages = []
 pages.append(f'''<section class="page cover"><div class="sun"></div><div class="grid"></div>
 <div class="txt"><div class="kicker">OPEN-SOURCE CLIP ENGINE</div><h1>NEON<br><em>CLIPPING</em></h1>
 <p>Paste a link. Get captioned 9:16 clips in about two minutes. Free. On your computer.<br><span class="hi">लिंक पेस्ट करो। दो मिनट में कैप्शन वाली 9:16 क्लिप पाओ। फ्री। आपके अपने कंप्यूटर पर।</span></p>
-<p style="margin-top:8mm"><span class="chip">★ Star on GitHub</span><span class="chip ig">Follow @ft_raj_check</span></p><p style="font-size:11pt">{GH}</p></div>
-<div class="by">Made by <span>DigiRG Cloud</span> · Instagram @ft_raj_check · English + हिंदी guide</div></section>''')
+<p style="margin-top:8mm"><span class="chip">★ Star on GitHub</span></p><p style="font-size:11pt">{GH}</p></div>
+<div class="by">Made by <span>FreeClipping</span> · English + हिंदी guide</div></section>''')
 
 pages.append(f'''<section class="page"><h2><span class="n">01</span>What you get <span class="hi sub">· आपको क्या मिलता है</span></h2>
 <img class="shot" src="home.jpg" style="width:100%">
@@ -57,7 +57,7 @@ pages.append(f'''<section class="page"><h2><span class="n">02</span>Set up in on
 <div class="steps">
 {step(1, "Open an AI agent that can run commands on your computer: Claude Code, OpenAI Codex, Google Antigravity or Cursor.", "ऐसा AI agent खोलो जो आपके कंप्यूटर पर कमांड चला सके: Claude Code, OpenAI Codex, Google Antigravity या Cursor।")}
 {step(2, "Copy the prompt on the next page and paste it. Press Enter.", "अगले पन्ने का prompt कॉपी करके पेस्ट करो। Enter दबाओ।")}
-{step(3, "Say yes when it asks. It checks your computer, installs what is missing, starts DigiRG Cloud and opens it in Chrome.", "जब पूछे तो yes बोलो। वह आपका कंप्यूटर जाँचेगा, जो कम है वो इंस्टॉल करेगा, DigiRG Cloud चालू करके Chrome में खोल देगा।")}
+{step(3, "Say yes when it asks. It checks your computer, installs what is missing, starts FreeClipping and opens it in Chrome.", "जब पूछे तो yes बोलो। वह आपका कंप्यूटर जाँचेगा, जो कम है वो इंस्टॉल करेगा, FreeClipping चालू करके Chrome में खोल देगा।")}
 {step(4, "It then explains in simple Hindi how to use it. Done.", "फिर वह आसान हिंदी में बताएगा कि इस्तेमाल कैसे करना है। बस।")}
 </div>
 <div class="tiles small">
@@ -72,7 +72,7 @@ pages.append(f'''<section class="page"><h2><span class="n">02</span>Set up in on
 cut = prompt.index('STEP 4.')
 prompt_a, prompt_b = prompt[:cut].rstrip(), prompt[cut:]
 pages.append(f'''<section class="page"><h2><span class="n">03</span>The prompt, part 1 <span class="hi sub">· यह prompt कॉपी करो (1/2)</span></h2>
-<p class="lead">Copy everything in both boxes (this page and the next) and paste it into your AI agent. <span class="hi">दोनों पन्नों का पूरा टेक्स्ट कॉपी करके अपने AI agent में पेस्ट करो। वही फ़ाइल GitHub पर भी है: docs/DIGIRGCLOUD-AGENT-SETUP-PROMPT.txt</span></p>
+<p class="lead">Copy everything in both boxes (this page and the next) and paste it into your AI agent. <span class="hi">दोनों पन्नों का पूरा टेक्स्ट कॉपी करके अपने AI agent में पेस्ट करो। वही फ़ाइल GitHub पर भी है: docs/FREECLIPPING-AGENT-SETUP-PROMPT.txt</span></p>
 <pre class="pr">{html.escape(prompt_a)}</pre>
 {foot("3")}</section>''')
 pages.append(f'''<section class="page"><h2><span class="n">03</span>The prompt, part 2 <span class="hi sub">· prompt (2/2)</span></h2>
@@ -112,11 +112,11 @@ pages.append(f'''<section class="page"><h2><span class="n">06</span>Tips and fix
 <tr><td>Link fails</td><td>Use the original MP4 with Upload video. <span class="hi">ओरिजिनल MP4 Upload video से डालो।</span></td></tr>
 <tr><td>Can't set it up</td><td>Paste the prompt into an AI agent again and tell it the error. <span class="hi">Prompt दोबारा AI agent को दो और एरर बताओ।</span></td></tr></table>
 <div class="cta"><h3>Liked it? Please star it ★ / पसंद आया? स्टार ज़रूर करें ★</h3>
-<p><b>Every star tells me this is useful and helps me keep making DigiRG Cloud better. <span class="hi">हर स्टार मुझे बताता है कि यह काम का है और इसे आगे बेहतर बनाने में मदद करता है।</span></b><br><br>
-★ <a href="https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE">{GH}</a><br>♥ Optional support (UPI / cards): <a href="https://rzp.io/rzp/JN41CpW">rzp.io/rzp/JN41CpW</a><br>📷 Instagram: <a href="https://www.instagram.com/ft_raj_check/">@ft_raj_check</a> · Made by <b>DigiRG Cloud</b></p></div>
+<p><b>Every star tells me this is useful and helps me keep making FreeClipping better. <span class="hi">हर स्टार मुझे बताता है कि यह काम का है और इसे आगे बेहतर बनाने में मदद करता है।</span></b><br><br>
+★ <a href="https://github.com/Analoggeek/FreeClipping">{GH}</a> · Made by <b>FreeClipping</b></p></div>
 {foot("6")}</section>''')
 
-doc = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><title>DigiRG Cloud Guide · English + हिंदी</title>\n'
+doc = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8"><title>FreeClipping Guide · English + हिंदी</title>\n'
        f'<style>{css}</style></head><body>\n' + '\n'.join(pages) + '\n</body></html>')
 (here / 'guide.html').write_text(doc, encoding='utf-8')
 print('pages', len(pages), 'bytes', len(doc))

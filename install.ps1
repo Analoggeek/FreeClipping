@@ -1,11 +1,11 @@
-# DigiRGCloud one-click installer for Windows (PowerShell 5.1+, no admin needed).
-# What it does: checks your PC, installs what is missing (Python, FFmpeg), downloads DigiRGCloud, builds a private
+# FreeClipping one-click installer for Windows (PowerShell 5.1+, no admin needed).
+# What it does: checks your PC, installs what is missing (Python, FFmpeg), downloads FreeClipping, builds a private
 # Python environment, makes a desktop shortcut, starts the app and opens it in your browser.
-# Everything lands in one folder (default: %LOCALAPPDATA%\DigiRGCloud). Delete that folder to uninstall.
+# Everything lands in one folder (default: %LOCALAPPDATA%\FreeClipping). Delete that folder to uninstall.
 # Plain text on purpose: you can read every line before you run it.
 param(
-    [string]$InstallDir = (Join-Path $env:LOCALAPPDATA 'DigiRGCloud'),
-    [string]$ZipUrl = 'https://github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE/archive/refs/heads/main.zip',
+    [string]$InstallDir = (Join-Path $env:LOCALAPPDATA 'FreeClipping'),
+    [string]$ZipUrl = 'https://github.com/Analoggeek/FreeClipping/archive/refs/heads/main.zip',
     [string]$SourceDir = '',          # developers: copy the app from a local folder instead of downloading
     [switch]$NoStart,                 # install only, do not start the app
     [switch]$Yes,                     # answer "yes" to the optional questions (GPU libraries, Ollama)
@@ -57,8 +57,8 @@ $log = Join-Path $InstallDir 'install.log'
 try { Start-Transcript -Path $log -Append | Out-Null } catch {}
 
 Write-Host ""
-Write-Host "  DIGIRG CLOUD SETUP" -ForegroundColor Cyan
-Write-Host "  Paste a link, get captioned 9:16 clips. Free, local, open-source. By DigiRG Cloud (@ft_raj_check)"
+Write-Host "  FreeClipping SETUP" -ForegroundColor Cyan
+Write-Host "  Paste a link, get captioned 9:16 clips. Free, local, open-source. By FreeClipping (analoggeek)"
 Write-Host "  Install folder: $InstallDir"
 
 try {
@@ -120,15 +120,15 @@ try {
     }
 
     # ---- 3. the app
-    Step "Step 4/6 - DigiRGCloud app laa raha hoon"
+    Step "Step 4/6 - FreeClipping app laa raha hoon"
     $app = Join-Path $InstallDir 'app'
     New-Item -ItemType Directory -Force -Path $app | Out-Null
     if ($SourceDir) {
         Get-ChildItem $SourceDir -Force | Where-Object { $_.Name -notin @('.venv', 'data', '__pycache__', '.git') } | ForEach-Object { Copy-Item $_.FullName $app -Recurse -Force }
     } else {
-        $zip = Join-Path $env:TEMP 'digirg-cloud-main.zip'
+        $zip = Join-Path $env:TEMP 'freeclipping-main.zip'
         Download $ZipUrl $zip
-        $tmp = Join-Path $env:TEMP 'digirg-cloud-unpack'
+        $tmp = Join-Path $env:TEMP 'freeclipping-unpack'
         if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
         Expand-Archive -Path $zip -DestinationPath $tmp -Force
         $root = Get-ChildItem $tmp -Directory | Select-Object -First 1
@@ -177,11 +177,11 @@ try {
 
     # ---- start script + desktop shortcut
     Step "Step 6/6 - Shortcut aur start"
-    $startBat = Join-Path $InstallDir 'Start-DigiRGCloud.bat'
+    $startBat = Join-Path $InstallDir 'Start-FreeClipping.bat'
     $pathLine = if ($ffbin) { "set `"PATH=$ffbin;%PATH%`"" } else { 'rem FFmpeg already on PATH' }
     $bat = @(
         '@echo off',
-        'title DigiRGCloud (band karne ke liye ye window band karo)',
+        'title FreeClipping (band karne ke liye ye window band karo)',
         'if not defined NEONCLIPPING_PORT set NEONCLIPPING_PORT=8770',
         $pathLine,
         'powershell -NoProfile -Command "try{Invoke-WebRequest -UseBasicParsing http://127.0.0.1:%NEONCLIPPING_PORT%/healthz -TimeoutSec 2 | Out-Null; exit 0}catch{exit 1}"',
@@ -195,23 +195,23 @@ try {
     )
     Set-Content -Path $startBat -Value $bat -Encoding ASCII
     # same start script with the phone remote switched on (listens on the home network, PIN required; see README)
-    $phoneBat = Join-Path $InstallDir 'Start-DigiRGCloud-Phone.bat'
+    $phoneBat = Join-Path $InstallDir 'Start-FreeClipping-Phone.bat'
     Set-Content -Path $phoneBat -Value (@($bat[0], $bat[1], 'set NEONCLIPPING_LAN=1') + $bat[2..($bat.Count - 1)]) -Encoding ASCII
     if (-not $NoShortcut) { try {
         $desk = [Environment]::GetFolderPath('Desktop')
-        $sh = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk 'DigiRGCloud.lnk'))
-        $sh.TargetPath = $startBat; $sh.WorkingDirectory = $InstallDir; $sh.Description = 'DigiRGCloud - captioned 9:16 clips'; $sh.Save()
-        $sh2 = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk 'DigiRGCloud (phone access).lnk'))
-        $sh2.TargetPath = $phoneBat; $sh2.WorkingDirectory = $InstallDir; $sh2.Description = 'DigiRGCloud with phone remote (same Wi-Fi, PIN)'; $sh2.Save()
-        Ok "Desktop pe 'DigiRGCloud' shortcut ban gaya."
-        Ok "Desktop pe 'DigiRGCloud (phone access)' shortcut bhi ban gaya: phone se live clipping control karne ke liye."
+        $sh = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk 'FreeClipping.lnk'))
+        $sh.TargetPath = $startBat; $sh.WorkingDirectory = $InstallDir; $sh.Description = 'FreeClipping - captioned 9:16 clips'; $sh.Save()
+        $sh2 = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path $desk 'FreeClipping (phone access).lnk'))
+        $sh2.TargetPath = $phoneBat; $sh2.WorkingDirectory = $InstallDir; $sh2.Description = 'FreeClipping with phone remote (same Wi-Fi, PIN)'; $sh2.Save()
+        Ok "Desktop pe 'FreeClipping' shortcut ban gaya."
+        Ok "Desktop pe 'FreeClipping (phone access)' shortcut bhi ban gaya: phone se live clipping control karne ke liye."
     } catch { Warn "Desktop shortcut nahi ban paya. Start file: $startBat" } }
 
     Stop-Transcript | Out-Null
     Write-Host ""
     Write-Host "  SETUP COMPLETE" -ForegroundColor Green
     if ($NoShortcut) { Write-Host "  Agli baar: $startBat pe double-click karo, browser mein khul jayega (http://127.0.0.1:8770)." }
-    else { Write-Host "  Agli baar: Desktop pe 'DigiRGCloud' pe double-click karo, browser mein khul jayega (http://127.0.0.1:8770)." }
+    else { Write-Host "  Agli baar: Desktop pe 'FreeClipping' pe double-click karo, browser mein khul jayega (http://127.0.0.1:8770)." }
     Write-Host "  Use: 1) video link paste karo  2) 'Make clips' dabao  3) clip dekho aur 'Download MP4' dabao."
     Write-Host $(if ($NoShortcut) { "  Uninstall: $InstallDir folder delete kar do." } else { "  Uninstall: $InstallDir folder aur Desktop shortcut delete kar do." })
     if (-not $NoStart) {
@@ -226,6 +226,6 @@ try {
     Write-Host "  SETUP FAIL HUA" -ForegroundColor Red
     Write-Host "  Wajah: $($_.Exception.Message)" -ForegroundColor Red
     Write-Host "  Log file: $log"
-    Write-Host "  Madad: ye log aur error kisi AI agent (Claude/ChatGPT) ko dikhao, ya GitHub pe issue kholo: github.com/DIGIRGCLOUD/DIGIRGCLIPPINGFREE"
+    Write-Host "  Madad: ye log aur error kisi AI agent (Claude/ChatGPT) ko dikhao, ya GitHub pe issue kholo: github.com/Analoggeek/FreeClipping"
     exit 1
 }
