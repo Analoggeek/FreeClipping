@@ -56,3 +56,11 @@ __pycache__/
 !.gitattributes
 !.github/workflows/
 !.github/workflows/*
+!icons/
+!icons/*.png
+!icons/*.ico
+!icons/*.icns
+!tools/build_icons.py
+!tools/offline/
+!tools/offline/*.py
+!docs/*.png
