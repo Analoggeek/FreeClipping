@@ -20,8 +20,17 @@ import brands
 import hooks
 import curation
 import facecam_detect
-ROOT=Path(__file__).resolve().parent
-DATA=Path(os.environ.get('NEONCLIPPING_DATA_DIR',str(ROOT/'data'))).resolve();DATA.mkdir(parents=True,exist_ok=True)
+import sys as _sys
+_FROZEN = getattr(_sys, 'frozen', False)
+ROOT = Path(getattr(_sys, '_MEIPASS', Path(__file__).resolve().parent))
+# DATA: user-writable dir (local app data on Windows, bundle dir in dev)
+if _FROZEN:
+    _localappdata = os.environ.get('LOCALAPPDATA')
+    _data_fallback = Path(_localappdata) / 'FreeClipping' if _localappdata else Path.home() / 'FreeClipping'
+else:
+    _data_fallback = ROOT / 'data'
+DATA = Path(os.environ.get('NEONCLIPPING_DATA_DIR', str(_data_fallback))).resolve()
+DATA.mkdir(parents=True, exist_ok=True)
 app=FastAPI()
 state={}
 def probe(p):
