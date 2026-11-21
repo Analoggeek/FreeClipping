@@ -1,0 +1,107 @@
+name: build-installers
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    name: macOS .dmg (${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-14, arch: arm64 }
+          - { os: macos-13, arch: x64 }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build the self-contained .app
+        run: python3 tools/offline/make_app_bundle.py --mac-arch ${{ matrix.arch }}
+      - name: Unzip the .app and create the .dmg
+        run: |
+          set -euo pipefail
+          unzip -o "dist/FreeClipping-macOS-${{ matrix.arch }}.app.zip" -d dist
+          hdiutil create -ov \
+            -volname "FreeClipping" \
+            -srcfolder "dist/FreeClipping.app" \
+            -format UDZO \
+            -windowsize 520 340 \
+            -icon-size 128 \
+            "dist/FreeClipping-macOS-${{ matrix.arch }}.dmg"
+      - name: Upload .dmg artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-${{ matrix.arch }}-dmg
+          path: dist/*.dmg
+
+  windows:
+    name: Windows .exe (x64)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+      - name: Build the .exe
+        shell: pwsh
+        run: |
+          pyinstaller --noconfirm --onefile --clean `
+            --icon icons/app-icon.ico `
+            --add-data "index.html;." `
+            --add-data "style.css;." `
+            --add-data "app.js;." `
+            --add-data "mobile.html;." `
+            --add-data "extras.js;." `
+            --add-data "transcripts.js;." `
+            --add-data "vision.js;." `
+            --add-data "report.js;." `
+            --add-data "LICENSE;." `
+            --add-data "icons;icons" `
+            --add-data "models;models" `
+            --hidden-import uvicorn.main `
+            --hidden-import uvicorn.logging.config `
+            --hidden-import uvicorn.logging.filters `
+            --hidden-import yt_dlp `
+            --hidden-import PIL `
+            --hidden-import cv2 `
+            --hidden-import numpy `
+            --name FreeClipping `
+            app.py
+      - name: Rename the .exe
+        shell: pwsh
+        run: |
+          Move-Item dist/FreeClipping.exe dist/FreeClipping-Setup-Windows-x64.exe
+      - name: Upload .exe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-x64-exe
+          path: dist/FreeClipping-Setup-Windows-x64.exe
+
+  release:
+    name: Attach installer to GitHub release
+    needs: [macos, windows]
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: '*'
+          path: artifacts
+      - name: Create release (if missing) + attach installer assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }} — FreeClipping
+          files: artifacts/**/*
+          generate_release_notes: true
+          prerelease: false
