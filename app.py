@@ -38,7 +38,7 @@ def probe(p):
  j=json.loads(r.stdout);v=next(x for x in j['streams'] if x['codec_type']=='video')
  return {'w':v['width'],'h':v['height'],'duration':float(j['format']['duration'])}
 @app.get('/')
-def home():return HTMLResponse((ROOT/'index.html').read_text(encoding='utf-8'))
+def home():return HTMLResponse((ROOT/'app'/'index.html').read_text(encoding='utf-8'))
 attach(app,DATA,state,probe)
 @app.get('/layouts')
 def native_layouts(top:float=.32,aspect:str='vertical',resolution:int=1080):

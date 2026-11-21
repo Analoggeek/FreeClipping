@@ -1,58 +1,373 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="viewport" content="width=device-width,initial-scale=1"><title>FreeClipping · Free AI Video Clip Engine &amp; Shorts Maker</title><link rel="icon" type="image/png" href="/icon-192.png"><link rel="apple-touch-icon" type="image/png" href="/icon-512.png"><meta name="description" content="FreeClipping - The #1 Free, Open-Source AI Video Clip Engine. Automatically turn long YouTube, Twitch and Kick videos into viral 9:16 vertical clips with animated captions, facecam framing, and AI highlight detection. 100% Local &amp; Private."><meta name="keywords" content="freeclipping, free ai video clipper, free video clipper, ai video clipper, video highlight generator, vertical clips, youtube shorts maker, instagram reels maker, tiktok maker, reels maker, shorts generator, hinglish captions, auto captions, local ai video editor, twitch clipper, open-source video editor"><meta name="author" content="FreeClipping (analoggeek)"><meta property="og:title" content="FreeClipping · Free AI Video Clip Engine"><meta property="og:description" content="Turn long videos into viral vertical clips in 2 minutes. Free, local, private, and open-source."><meta property="og:url" content="https://github.com/Analoggeek/FreeClipping"><meta property="og:type" content="website"><link rel="stylesheet" href="/assets/style.css?v=20261121-freeclipping2"></head><body>
-<aside class="sidebar"><a class="brand" href="/"><span class="brand-icon">⚡</span> <div>FreeClipping<small>AI CLIP ENGINE · STUDIO v2.0</small></div></a><div class="nav-label">WORKSPACE</div><button class="nav active" data-view="editor">◫ &nbsp; Create clips</button><button class="nav" data-view="library">▦ &nbsp; My clips <span id="library-count">0</span></button><div class="side-note">● FreeClipping ENGINE<p>100% Private local processing.<br>No cloud storage limits.</p></div><div class="signature">FREECLIPPING STUDIO<small>Made by <a href="https://github.com/Analoggeek" target="_blank" rel="noopener" style="color:inherit">Analoggeek</a></small></div></aside>
-<main><header><div class="eyebrow">FreeClipping AI STUDIO</div><div class="top"><h1>Long video. <em>Viral moments.</em></h1><span class="social"><a class="gh" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a></span></div><p>Paste any YouTube, Twitch or Kick link. Get captioned 9:16 vertical clips with AI-scored hooks in minutes. Powered by FreeClipping.</p></header><section id="editor-view">
-<section class="panel import-panel"><div class="section-head"><h2><span class="step">01</span> Bring your video</h2><label class="upload">↑ Upload video<input id="file" type="file" accept="video/*" hidden></label></div><div class="url-row"><input id="url" type="url" placeholder="Paste a YouTube, Twitch or Kick replay link"><button class="primary" id="link">Get preview ↗</button><button class="primary make" id="make">⚡ Make clips</button></div><div class="make-row"><span class="muted">Make clips = one click: download → AI scores moments → captioned 9:16 clips. Uses your settings below.</span></div><div id="make-results" hidden><div class="progress-track"><div id="make-progress"></div></div><b id="make-status"></b><div id="make-grid" class="make-grid"></div></div><div class="import-note" id="link-status" role="status">Frames arrive first. Select your areas while the full source downloads.</div><div class="progress-track" hidden id="progress-wrap"><div id="progress"></div></div><div id="frames" class="frames"></div><label class="toggle" style="margin-top:12px"><input id="auto-analyze" type="checkbox" checked> Find highlights automatically when the source is ready</label></section><details class="panel" id="queue-panel"><summary><b>Processing queue</b> · save batches for later</summary><p class="muted">Queue video links, pause waiting work, or retry an interrupted job. Running work is kept safe.</p><label>Video links, one per line<textarea id="queue-urls" rows="3" placeholder="https://www.youtube.com/watch?v=..."></textarea></label><div class="controls"><label>Start after (optional)<input id="queue-time" type="datetime-local"></label><button class="secondary" id="queue-add">Add videos to queue</button><button id="queue-pause">Pause queue</button><button id="queue-refresh">Refresh queue</button></div><div id="queue-list"></div></details>
-<details class="panel" id="ai-panel"><summary><b>🤖 Long stream? Let a free chatbot pick the moments</b> <span class="pill">NEW</span></summary>
-<p class="muted">A chatbot given a 9-hour transcript only really reads the start. So: split the transcript into small parts, paste each part into any free chatbot (Gemini, ChatGPT, Claude…), paste its answers back here, and FreeClipping downloads only those sections and makes the clips. Needs a YouTube video with captions. Everything is local.</p>
-<div class="url-row"><input id="ai-url" type="text" placeholder="YouTube video link (a finished stream or video)"><button class="primary" id="ai-split">1 · Split into parts</button></div>
-<div class="controls"><label>Parts (blank = automatic)<input id="ai-parts" type="number" min="1" max="40" placeholder="auto"></label><label>Moments per part<input id="ai-per" type="number" min="1" max="10" value="3"></label></div>
-<div class="muted" id="ai-status"></div>
-<div id="ai-list"></div>
-<h3 style="margin-top:16px">2 · Paste the chatbot answers (all parts together is fine)</h3>
-<textarea id="ai-answers" rows="6" placeholder='[{"start":"00:12:30","end":"00:13:10","title":"Plane crash","hook":"bhai plane gir gaya"}] … or lines like 12:30-13:10 Plane crash'></textarea>
-<div class="controls"><button class="secondary" id="ai-read">Read the answers</button><button class="primary" id="ai-make" disabled>3 · Make clips from these moments</button></div>
-<div id="ai-moments"></div></details>
-<section class="panel creators-panel"><div class="section-head"><h2>👥 Creators <span class="pill">NEW</span></h2><span class="muted">add a streamer once, clips start by themselves when they go live</span></div><div class="url-row"><input id="creator-url" type="text" placeholder="Twitch name (kaicenat) or Twitch / YouTube channel link (youtube.com/@name)"><button class="primary" id="creator-add">+ Add creator</button></div><div class="import-note">FreeClipping checks every minute. When a creator on your list goes live, it records the stream and clips chat spikes with the layout, facecam boxes and caption style you selected. One stream at a time. Keep FreeClipping open; unattended recordings stop after 3 hours.</div><div id="creator-note" class="muted"></div><div id="creator-list"></div></section>
-<section class="panel live-panel"><div class="section-head"><h2>⚡ Live clipping <span class="pill">NEW</span></h2><span class="muted">clips while the stream is on</span></div><div class="url-row"><input id="live-url" type="text" placeholder="Twitch channel link or YouTube Live link"><button class="primary" id="live-start">● Start live clipping</button></div><div class="import-note">Records the stream, watches chat speed and cuts a clip around every chat spike (starting ~24 s before it). Uses your layout, facecam boxes, caption style and language from the steps below. Works only while the stream is live.</div><div id="live-box" hidden><div class="live-stats" id="live-stats"></div><div class="live-actions"><button class="secondary" id="live-now">✂ Clip the last 30 s now</button><button class="secondary" id="live-stop">■ Stop</button></div><div id="live-grid" class="make-grid"></div></div></section>
-<section class="panel"><div class="section-head"><h2><span class="step">02</span> Make it your format</h2><span class="muted">9:16 · 1080 × 1920</span></div><div class="controls"><label>Caption accuracy<select id="accurate"><option value="fast" selected>YouTube captions (default)</option><option value="best">Best Hindi: large-v3 (slow)</option></select></label><label>Mode<select id="mode"><option value="fast">⚡ Fast (~2-3 min)</option><option value="deep">🔬 Deep (slower, smarter)</option></select></label><label>Clips<input id="count" type="number" min="1" max="12" value="4"></label><label>Min length (s)<input id="minlen" type="number" min="5" max="120" value="30"></label><label>Max length (s)<input id="length" type="number" min="10" max="180" value="60"></label><button class="secondary" id="analyze">✦ Find highlights</button><span class="muted">Movement + audio activity.<br>Review each candidate.</span></div><div class="controls output-controls"><label>Output format<select id="aspect"><option value="vertical">9:16 · Shorts / Reels</option><option value="square">1:1 · Square</option><option value="portrait">4:5 · Feed</option><option value="threefour">3:4 · Portrait</option><option value="landscape">16:9 · YouTube</option></select></label><label>Resolution<select id="resolution"><option value="720">720</option><option value="1080" selected>1080</option><option value="2160">2160 · 4K</option></select></label><label title="How sharp the video downloaded from YouTube is. 1080p is the default; 4K is slower and uses much more disk.">Source quality<select id="srcq"><option value="1080" selected>1080p (default)</option><option value="2160">4K (slower)</option><option value="1440">1440p</option><option value="720">720p (fastest)</option></select></label><label>Frame rate<select id="fps"><option value="0">Keep original</option><option value="24">24 fps</option><option value="30">30 fps</option><option value="60">60 fps</option></select></label></div><div class="layout-grid" id="layouts"><button class="choice active" data-layout="stack"><span class="mini stack-mini"><i></i><i></i></span><b>Face + gameplay</b><small>Choose both areas</small></button><button class="choice" data-layout="blur"><span class="mini blur-mini"><i></i></span><b>Blurred fill</b><small>Keep the wider frame</small></button><button class="choice" data-layout="fill"><span class="mini fill-mini"><i></i></span><b>Fill screen</b><small>Bold centre crop</small></button><button class="choice" data-layout="game"><span class="mini game-mini"><i></i></span><b>Gameplay only</b><small>Use your selected area</small></button></div><div class="preset-row"><b>Facecam position</b><button class="chip" data-preset="tl">↖ Top-left</button><button class="chip" data-preset="tr">↗ Top-right</button><button class="chip" data-preset="bl">↙ Bottom-left</button><button class="chip" data-preset="br">↘ Bottom-right</button><button class="chip" data-preset="bc">⬇ Bottom-centre</button><button class="chip" data-preset="none">No facecam</button><span class="muted" id="preset-note">Pick one, or draw the boxes yourself in step 03.</span></div></section>
-<section class="panel"><div class="section-head"><h2><span class="step">03</span> Frame your moment</h2><span class="pill" id="source-mode">NO SOURCE YET</span></div><div class="candidate-row"><select id="recent"><option>No highlights yet</option></select><button id="import">Open highlight</button></div><div class="workspace"><div class="source-side"><div class="toolbar"><button id="cam" class="active">▣ Facecam area</button><button id="game">▣ Gameplay area</button><button id="save">Save layout</button><button id="load">Load layout</button></div><div class="canvas-wrap"><canvas id="source" width="960" height="540"></canvas><div id="empty-source">Your preview frames appear here.<small>Draw the facecam and gameplay boxes directly on a frame.</small></div></div><video id="video" controls preload="metadata"></video><div class="range-row"><label>Start / sec<input id="start" type="number" value="0" min="0" step=".1"></label><label>End / sec<input id="end" type="number" value="30" min="0" step=".1"></label><label id="height-control">Face size <span id="height-value">32%</span><input id="top" type="range" min="20" max="50" value="32"></label></div></div><aside class="preview-side"><div class="eyebrow">YOUR VERTICAL CUT</div><canvas id="preview" width="540" height="960"></canvas><small>Layout + caption style preview</small><label class="toggle"><input id="safe-zones" type="checkbox"> Show platform safe zones</label></aside></div></section>
-<section class="panel"><div class="section-head"><h2><span class="step">04</span> Give it a voice</h2><label class="toggle"><input id="captions" type="checkbox" checked> Burn in subtitles</label></div><div class="caption-styles"><button class="caption-choice active gta" data-style="gta"><span>THIS IS <strong>WILD</strong></span><b>GTA Neon</b><small>Cyan / electric sky / highlight</small></button><button class="caption-choice bold" data-style="bold"><span>THIS IS <strong>WILD</strong></span><b>Impact</b><small>Bold active-word highlight</small></button><button class="caption-choice hormozi" data-style="hormozi"><span>THIS IS <strong style="color:#00ffff">WILD</strong></span><b>Hormozi</b><small>White + cyan pop, thick outline</small></button><button class="caption-choice mrbeast" data-style="mrbeast"><span style="color:#ffff00">THIS IS <strong style="color:#ff6600">WILD</strong></span><b>MrBeast</b><small>Yellow + orange, huge outline</small></button><button class="caption-choice clean" data-style="clean"><span>This is wild.</span><b>Clean</b><small>Quiet, readable subtitles</small></button></div><div class="controls"><label>Spoken language<select id="language"><option value="">Auto (Hindi → Hinglish)</option><option value="hinglish">Hinglish (Hindi in English letters)</option><option value="hi">हिंदी (Devanagari)</option><option value="en">English</option><optgroup label="More languages (captions use your installed fonts)"><option value="ur">Urdu · اردو</option><option value="bn">Bengali · বাংলা</option><option value="ta">Tamil · தமிழ்</option><option value="te">Telugu · తెలుగు</option><option value="mr">Marathi · मराठी</option><option value="gu">Gujarati · ગુજરાતી</option><option value="kn">Kannada · ಕನ್ನಡ</option><option value="ml">Malayalam · മലയാളം</option><option value="pa">Punjabi · ਪੰਜਾਬੀ</option><option value="ne">Nepali · नेपाली</option><option value="si">Sinhala · සිංහල</option><option value="ar">Arabic · العربية</option><option value="fa">Persian · فارسی</option><option value="he">Hebrew · עברית</option><option value="tr">Turkish · Türkçe</option><option value="ru">Russian · Русский</option><option value="uk">Ukrainian · Українська</option><option value="pl">Polish · Polski</option><option value="cs">Czech · Čeština</option><option value="sk">Slovak · Slovenčina</option><option value="hu">Hungarian · Magyar</option><option value="ro">Romanian · Română</option><option value="bg">Bulgarian · Български</option><option value="sr">Serbian · Српски</option><option value="hr">Croatian · Hrvatski</option><option value="el">Greek · Ελληνικά</option><option value="de">German · Deutsch</option><option value="fr">French · Français</option><option value="es">Spanish · Español</option><option value="pt">Portuguese · Português</option><option value="it">Italian · Italiano</option><option value="nl">Dutch · Nederlands</option><option value="ca">Catalan · Català</option><option value="sv">Swedish · Svenska</option><option value="da">Danish · Dansk</option><option value="no">Norwegian · Norsk</option><option value="fi">Finnish · Suomi</option><option value="is">Icelandic · Íslenska</option><option value="id">Indonesian · Bahasa Indonesia</option><option value="ms">Malay · Bahasa Melayu</option><option value="tl">Filipino · Tagalog</option><option value="vi">Vietnamese · Tiếng Việt</option><option value="th">Thai · ไทย</option><option value="zh">Chinese · 中文</option><option value="ja">Japanese · 日本語</option><option value="ko">Korean · 한국어</option><option value="sw">Swahili · Kiswahili</option><option value="af">Afrikaans · Afrikaans</option><option value="am">Amharic · አማርኛ</option><option value="az">Azerbaijani · Azərbaycan</option></optgroup></select></label><label>Caption height<input id="caption-y" type="range" min="500" max="1750" value="1450"></label><button id="transcribe" class="secondary">Generate subtitles</button></div><p class="muted">Transcribes your selected time range locally. First use downloads a speech model. Check names and Hindi / English words before posting.</p><label class="toggle"><input id="timing-editor" type="checkbox"> Edit word timings</label><div class="controls"><label>Shift captions (seconds)<input id="caption-shift" type="number" step="0.1" value="0.5"></label><button id="shift-captions">Shift all words</button></div><div id="words" class="word-editor"></div><div class="copy-grid"><label>Opening hook / optional<input id="hook" placeholder="Add your own opening line" maxlength="65"></label><label>Clip title<input id="clip-title" placeholder="Give this clip a name"></label></div><label>Post caption<textarea id="post-caption" rows="2" placeholder="Generate subtitles to draft a caption, then edit it in your voice."></textarea></label></section>
-<section class="panel" id="style-panel"><div class="section-head"><h2><span class="step">05</span> Style &amp; extras</h2><span class="pill">NEW</span></div>
-<p class="muted">Optional. Wrap the clip in a post card, add a padded card on a background, a logo, a credit line, an outro ribbon and a music bed. These apply to Make clips, single exports and “Edit saved clips”.</p>
-<div class="controls">
-<label>Template<select id="st-template"><option value="none">None (use the layout above)</option><option value="x_light">X post · light</option><option value="x_dark">X post · dark</option><option value="tiktok_hook">TikTok hook</option><option value="breaking_news">Breaking news</option></select></label>
-<label>Name on the card<input id="st-tpl-name" type="text" maxlength="28" placeholder="Your Name"></label>
-<label>@handle<input id="st-tpl-handle" type="text" maxlength="28" placeholder="yourhandle"></label>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06070d">
+<link rel="apple-touch-icon" href="docs/icon.png">
+<title>FreeClipping · Free AI clip maker for gamers and streamers</title>
+<meta name="description" content="Paste a YouTube, Twitch or Kick link and get captioned 9:16 clips in about two minutes. Free, open-source, runs on your own PC. Hinglish captions, facecam layouts, live clipping.">
+<meta property="og:title" content="FreeClipping: paste a link, get captioned 9:16 clips">
+<meta property="og:description" content="Free and open-source. One-click setup for Windows. Hinglish captions, facecam layouts, live clipping, learns from your star ratings.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="docs/icon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+:root{
+  --bg:#06070d; --bg-soft:#0a0e1a; --panel:rgba(17,22,38,.62); --panel-solid:#101828;
+  --line:rgba(148,163,184,.14); --line-strong:rgba(148,163,184,.26);
+  --cyan:#22d3ee; --azure:#38bdf8; --lime:#a3e635; --pink:#fb7185; --orange:#fb923c; --violet:#8b5cf6;
+  --white:#eef2ff; --muted:#8d97b3; --dim:#5c6a82;
+  --grad:linear-gradient(135deg,#22d3ee 0%,#a3e635 100%);
+  --grad-warm:linear-gradient(135deg,#fb7185 0%,#f59e0b 100%);
+  --grad-violet:linear-gradient(135deg,#8b5cf6 0%,#22d3ee 100%);
+  --shadow:0 24px 60px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:
+  radial-gradient(60vw 52vw at 12% -8%,rgba(56,189,248,.14) 0%,transparent 62%),
+  radial-gradient(54vw 54vw at 88% 12%,rgba(139,92,246,.13) 0%,transparent 64%),
+  radial-gradient(70vw 60vw at 50% 122%,rgba(34,211,238,.1) 0%,transparent 64%),
+  var(--bg);
+  color:var(--white);font:16px/1.6 'Plus Jakarta Sans',-apple-system,'Segoe UI',Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(148,163,184,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(148,163,184,.05) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:radial-gradient(80% 60% at 50% 0%,#000 30%,transparent 100%);
+  -webkit-mask-image:radial-gradient(80% 60% at 50% 0%,#000 30%,transparent 100%)}
+a{color:var(--cyan);text-decoration:none;transition:color .15s}a:hover{color:#7ce8ff}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+::selection{background:rgba(34,211,238,.32);color:#fff}
+:focus-visible{outline:2px solid rgba(34,211,238,.7);outline-offset:3px;border-radius:6px}
+.js .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s cubic-bezier(.16,1,.3,1)}
+.js .reveal.in{opacity:1;transform:none}
+.js details summary{cursor:pointer}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:50;background:rgba(6,7,13,.68);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:18px;height:66px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--white);font-family:'Outfit',sans-serif;font-weight:900;font-size:21px;letter-spacing:-.02em}
+.logo .mark{width:36px;height:36px;border-radius:11px;background:var(--grad);color:#06070d;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;box-shadow:0 4px 18px rgba(34,211,238,.4)}
+.logo .mark-img{width:36px;height:36px;border-radius:11px;object-fit:cover;box-shadow:0 4px 18px rgba(34,211,238,.4)}
+.logo b{color:var(--pink);font-weight:900}
+nav .links{margin-left:auto;display:flex;gap:6px;align-items:center}
+nav .links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;padding:9px 14px;border-radius:11px;transition:all .18s}
+nav .links a:hover{color:var(--white);background:rgba(148,163,184,.1)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:13px;padding:13px 24px;font-weight:800;text-decoration:none;border:1px solid transparent;cursor:pointer;font-size:15px;font-family:inherit;letter-spacing:.01em;transition:transform .2s cubic-bezier(.16,1,.3,1),box-shadow .2s,filter .2s;line-height:1.3}
+.btn.main{background:var(--grad);color:#06070d;font-size:16.5px;padding:16px 30px;box-shadow:0 10px 34px rgba(34,211,238,.34)}
+.btn.main:hover{transform:translateY(-2px);filter:brightness(1.1);box-shadow:0 16px 40px rgba(163,230,53,.38)}
+.btn.pink{background:var(--grad-warm);color:#1a0b16;box-shadow:0 8px 28px rgba(251,113,133,.3)}
+.btn.pink:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn.ghost{background:rgba(21,29,48,.62);border-color:var(--line-strong);color:var(--white)}
+.btn.ghost:hover{transform:translateY(-2px);border-color:rgba(34,211,238,.5);box-shadow:0 8px 26px rgba(34,211,238,.16)}
+.btn.white{background:#fff;color:#06070d;box-shadow:0 8px 26px rgba(255,255,255,.14)}
+.btn.white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,255,255,.2)}
+nav .btn.small{padding:9px 18px;font-size:13.5px;border-radius:11px}
+.menu-btn{touch-action:manipulation;display:none;border:1px solid var(--line-strong);background:var(--panel);color:var(--white);border-radius:12px;padding:9px 13px;font-size:20px;line-height:1;cursor:pointer;align-items:center;justify-content:center;transition:border-color .2s}
+.menu-btn:hover{border-color:rgba(34,211,238,.5)}
+.mobile-menu{display:none;flex-direction:column;gap:4px;padding:10px 22px 18px;background:rgba(6,7,13,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--white);text-decoration:none;font-weight:700;font-size:16px;padding:12px 10px;border-radius:12px}
+.mobile-menu a:hover{background:rgba(148,163,184,.1);color:var(--cyan)}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;padding:74px 0 96px}
+.hero .blob{position:absolute;border-radius:50%;filter:blur(80px);opacity:.55;pointer-events:none;animation:drift 14s ease-in-out infinite alternate}
+.hero .b1{width:440px;height:440px;left:-140px;top:-120px;background:radial-gradient(circle,#22d3ee55,transparent 65%)}
+.hero .b2{width:520px;height:520px;right:-170px;top:-40px;background:radial-gradient(circle,#8b5cf655,transparent 65%);animation-delay:-5s}
+.hero .b3{width:380px;height:380px;left:38%;bottom:-180px;background:radial-gradient(circle,#a3e63544,transparent 65%);animation-delay:-9s}
+@keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.12)}}
+.hero .wrap{display:grid;grid-template-columns:1.22fr .78fr;gap:42px;align-items:center;position:relative;z-index:1}
+.kicker{display:inline-flex;align-items:center;gap:9px;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);background:rgba(34,211,238,.09);border:1px solid rgba(34,211,238,.3);border-radius:99px;padding:7px 16px;box-shadow:0 0 24px rgba(34,211,238,.14)}
+h1{font-family:'Outfit',sans-serif;font-weight:900;font-size:clamp(46px,7.2vw,84px);line-height:.97;letter-spacing:-.035em;margin:22px 0 18px;text-shadow:0 4px 40px rgba(34,211,238,.25)}
+h1 em{font-style:normal;background:linear-gradient(115deg,#22d3ee 0%,#a3e635 58%,#fb7185 125%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:19px;max-width:560px;color:#cdd7ec;line-height:1.55}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin:26px 0 16px}
+.fine{font-size:13.5px;color:var(--muted)}
+.chip-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:20px}
+.chip-row span{font-size:12px;font-weight:700;color:#d7e2f4;background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:7px 14px;backdrop-filter:blur(8px)}
+.phone{justify-self:center;width:min(258px,78%);border-radius:38px;border:1px solid rgba(255,255,255,.13);background:#000;box-shadow:0 36px 90px rgba(0,0,0,.68),0 0 0 7px #14101f,0 0 70px rgba(251,113,133,.22);overflow:hidden;position:relative}
+.phone::before{content:'';position:absolute;top:11px;left:50%;transform:translateX(-50%);width:86px;height:20px;border-radius:99px;background:#14101f;z-index:2}
+.phone video{display:block;width:100%;aspect-ratio:9/16;background:#000}
+.os-note{display:none;position:relative;margin-top:26px}
+
+/* SECTIONS */
+section{padding:66px 0}
+.sec-head{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:32px}
+h2{font-family:'Outfit',sans-serif;font-size:clamp(30px,4.4vw,44px);font-weight:900;letter-spacing:-.03em;margin:0}
+h2 em{font-style:normal;background:linear-gradient(115deg,#22d3ee,#a3e635);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);max-width:680px;margin:6px 0 0;font-size:16.5px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.stepcard{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .25s cubic-bezier(.16,1,.3,1)}
+.stepcard:hover{transform:translateY(-4px);border-color:var(--line-strong);box-shadow:var(--shadow)}
+.stepcard .n{width:44px;height:44px;border-radius:13px;background:var(--grad);color:#06070d;font-family:'Outfit',sans-serif;font-weight:900;font-size:19px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;box-shadow:0 6px 20px rgba(34,211,238,.3)}
+.stepcard b{font-size:18px;display:block;letter-spacing:-.01em;font-family:'Outfit',sans-serif}
+.stepcard p{color:var(--muted);margin:8px 0 0;font-size:14.5px;line-height:1.55}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .25s cubic-bezier(.16,1,.3,1)}
+.tile:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.38);box-shadow:0 18px 44px rgba(0,0,0,.5),0 0 30px rgba(34,211,238,.1)}
+.tile .ic{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;background:linear-gradient(145deg,rgba(34,211,238,.16),rgba(163,230,53,.1));border:1px solid rgba(34,211,238,.28)}
+.tile b{display:block;font-family:'Outfit',sans-serif;font-size:17px;letter-spacing:-.01em;margin:4px 0 6px}
+.tile p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+.muted{color:var(--muted)}
+
+/* SETUP TABS */
+.tabs{display:flex;flex-wrap:wrap;gap:9px;margin:6px 0 22px}
+.tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:12px 22px;border-radius:99px;cursor:pointer;font-weight:700;font-family:inherit;font-size:14.5px;backdrop-filter:blur(10px);transition:all .2s}
+.tab:hover{color:var(--white);border-color:var(--line-strong)}
+.tab.on{background:var(--grad);border-color:transparent;color:#06070d;font-weight:800;box-shadow:0 8px 26px rgba(34,211,238,.28)}
+.pane{display:none;background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:30px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow)}
+.pane.on{display:block;animation:pop .32s cubic-bezier(.16,1,.3,1)}
+@keyframes pop{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pane ol{padding-left:20px;margin:18px 0 4px;color:#cfd8ec}
+.pane li{margin:9px 0}
+.pane .btn{margin:4px auto 24px}
+.pane p.lead2{color:var(--muted);max-width:660px}
+code,pre{font-family:'JetBrains Mono',Consolas,monospace}
+pre{background:#04060c;border:1px solid var(--line);border-radius:13px;padding:15px 17px;overflow:auto;font-size:13.5px;margin:12px 0;white-space:pre-wrap;word-break:break-all;color:#d9f1ff}
+.copy{display:flex;gap:11px;align-items:stretch;flex-wrap:wrap}
+.copy pre{flex:1;margin:0;min-width:240px}
+.note{border-left:4px solid var(--orange);background:rgba(251,146,60,.1);padding:13px 18px;border-radius:0 14px 14px 0;color:#ffd9b8;font-size:14.5px;margin:18px 0}
+#copy-prompt-msg{color:var(--lime);font-weight:700;margin-left:12px}
+
+/* SHOT */
+.shot{display:block;width:100%;border-radius:24px;border:1px solid var(--line);box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04),0 0 60px rgba(139,92,246,.14)}
+
+/* FAQ */
+.faq details{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:2px 24px;margin:13px 0;backdrop-filter:blur(10px);transition:border-color .2s}
+.faq details:hover{border-color:var(--line-strong)}
+.faq details summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;cursor:pointer;font-weight:700;font-size:16.5px;padding:18px 0;letter-spacing:-.01em}
+.faq details summary::-webkit-details-marker{display:none}
+.faq details summary .chev{color:var(--cyan);font-size:20px;transition:transform .25s;flex-shrink:0}
+.faq details[open] summary .chev{transform:rotate(45deg)}
+.faq details p{color:var(--muted);margin:0 0 20px;max-width:860px;line-height:1.6}
+
+/* SUPPORT */
+.support{border-radius:26px;padding:48px 32px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(34,211,238,.3);background:linear-gradient(140deg,#16102b 0%,#241238 48%,#3a1240 100%);box-shadow:var(--shadow)}
+.support::before{content:'';position:absolute;right:-120px;top:-120px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.28),transparent 65%);pointer-events:none}
+.support::after{content:'';position:absolute;left:-100px;bottom:-130px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(251,113,133,.24),transparent 65%);pointer-events:none}
+.support h2{margin-bottom:10px;position:relative;z-index:1}
+.support p{max-width:600px;margin:0 auto 26px;color:#e2d9ef;position:relative;z-index:1}
+.support .btn{position:relative;z-index:1}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:38px 0 44px;color:var(--muted);font-size:14px;position:relative;z-index:1}
+footer .wrap{display:flex;gap:22px;justify-content:space-between;flex-wrap:wrap;align-items:center}
+footer b{color:var(--white)}
+footer a{color:var(--muted);font-weight:600}
+footer a:hover{color:var(--white)}
+.copy-note{text-align:center;margin-top:22px;color:var(--dim);font-size:12.5px;letter-spacing:.04em}
+
+@media(max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;padding-top:54px;text-align:center}
+  .hero .cta,.hero .chip-row{justify-content:center}
+  .sub{margin:0 auto}
+  .phone{width:min(230px,86%)}
+  .grid-3,.grid-2{grid-template-columns:1fr}
+  nav .links a:not(.btn){display:none}
+  .menu-btn{display:inline-flex}
+  .links .btn{padding:8px 12px;font-size:12.5px}
+  section{padding:48px 0}
+  h1{font-size:clamp(38px,11vw,58px)}
+  .support{padding:36px 22px}
+  .cta{gap:10px}
+  .cta a{flex:1 1 160px;padding:14px 16px;font-size:15px}
+  .phone{width:min(215px,82%)}
+  .chip-row span{font-size:11px;padding:6px 12px}
+}
+@media (max-width:430px){
+  .hero{padding:42px 0 56px}
+  .hero .wrap{gap:26px}
+  .sub{font-size:16px}
+  .kicker{font-size:10px;letter-spacing:.14em}
+  .fine{font-size:12px}
+  .nav-btn,nav .btn.small{padding:8px 10px;font-size:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add('js')</script>
+
+<nav><div class="wrap">
+  <a class="logo" href="#"><img class="mark mark-img" src="docs/icon.png" alt="FreeClipping logo" width="36" height="36"> Free<b>Clipping</b></a>
+  <div class="links">
+    <a href="#how">How it works</a><a href="#features">Features</a><a href="#setup">Setup</a><a href="#faq">FAQ</a>
+    <a class="btn white small" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
+  </div>
+  <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
 </div>
-<div class="controls">
-<label>Background<select id="st-bg-mode"><option value="none">None</option><option value="blur">Blurred copy</option><option value="color">Colour</option><option value="gradient">Gradient</option><option value="image">My image</option></select></label>
-<label>Colour<input id="st-bg-color" type="color" value="#07090e"></label>
-<label>Colour 2<input id="st-bg-color2" type="color" value="#00f0ff"></label>
-<label><span>Padding <output id="st-padding-o">0</output>%</span><input id="st-padding" type="range" min="0" max="25" value="0"></label>
-<label><span>Rounded corners <output id="st-radius-o">0</output></span><input id="st-radius" type="range" min="0" max="80" value="0"></label>
-<label><span>Dim image <output id="st-dim-o">25</output>%</span><input id="st-bg-dim" type="range" min="0" max="90" value="25"></label>
-<label class="upload">↑ Background image<input id="st-bg-file" type="file" accept="image/*" hidden></label><span class="muted" id="st-bg-name"></span>
-</div>
-<div class="controls">
-<label class="upload">↑ Logo / watermark<input id="st-wm-file" type="file" accept="image/*" hidden></label><span class="muted" id="st-wm-name">no logo</span>
-<label>Position<select id="st-wm-pos"><option value="tr">Top-right</option><option value="tl">Top-left</option><option value="br">Bottom-right</option><option value="bl">Bottom-left</option></select></label>
-<label><span>Size <output id="st-wm-size-o">16</output>%</span><input id="st-wm-size" type="range" min="5" max="40" value="16"></label>
-<label><span>Opacity <output id="st-wm-op-o">85</output>%</span><input id="st-wm-opacity" type="range" min="10" max="100" value="85"></label>
-</div>
-<div class="controls">
-<label>Credit line<input id="st-credit" type="text" maxlength="60" placeholder="Clip: Channel name"></label>
-<label class="check"><input id="st-credit-auto" type="checkbox"> Use the video’s channel name</label>
-<label>Outro ribbon<input id="st-outro" type="text" maxlength="40" placeholder="FOLLOW @yourhandle"></label>
-<label>Outro seconds<input id="st-outro-sec" type="number" min="1.5" max="8" step=".5" value="3"></label>
-</div>
-<div class="controls">
-<label class="upload">↑ Music track<input id="st-music-file" type="file" accept="audio/*" hidden></label><span class="muted" id="st-music-name">no music</span>
-<label><span>Volume <output id="st-mv-o">15</output>%</span><input id="st-music-vol" type="range" min="0" max="100" value="15"></label>
-<label><span>Peak volume <output id="st-mp-o">85</output>%</span><input id="st-music-peak" type="range" min="0" max="100" value="85"></label>
-<label>Riser seconds<input id="st-music-riser" type="number" min="1" max="15" step="1" value="4"></label>
-</div>
-<div class="import-note">The music sits low under the voice, then rises to its peak volume in the last seconds. Your logo, music and image stay on this computer.</div>
-<div class="controls"><button class="secondary" id="st-reset">Reset all style options</button></div></section>
-<section class="panel" id="saved-edit" hidden><h2>Edit saved clips</h2><h3 style="margin-top:18px">Speaker position &amp; shape · 11 layouts</h3><div id="edit-layouts" class="layout-grid"></div><label>Speaker size<input id="edit-top" type="range" min="20" max="50" value="32"></label><p class="muted">Reuse the saved video, selected moments and subtitle timings. Only the final MP4 is exported again. <b>To cut the clip shorter</b> (for example to remove a spoken part), change <b>Start / End</b> above and press <b>Only this clip</b>; the subtitles move with the cut. Each clip keeps its own transcript.</p><div class="controls" style="margin-top:14px"><button class="primary" id="apply-video">Apply to all clips of this video</button><button class="secondary" id="apply-one">Only this clip</button><button id="download-bundle">Download video’s clips ZIP</button><a id="bundle-link" hidden download>Download ZIP</a></div></section><section class="export-bar"><div><b id="status" role="status">Add a video to begin.</b><p id="detail">Your exports stay on this computer and appear in My clips.</p></div><button id="batch">Export video highlights</button><button class="primary" id="export">Export clip ↗</button><a id="download" class="download" hidden download="freeclipping-clip.mp4">↓ Download MP4</a><a id="srt" hidden>↓ Subtitles SRT</a><a id="vtt" hidden>↓ WebVTT</a></section></section>
-<section id="library-view" hidden><section class="library-heading"><h2>Your clips, <em>ready to go.</em></h2><button id="refresh-library">Refresh library</button></section><p class="muted">Finished exports stay in the studio's data folder. Download an MP4 to keep or share it.</p><div id="library" class="library-grid"></div></section><footer>FreeClipping STUDIO <span>Developed with ❤️ by <a href="https://github.com/Analoggeek" target="_blank" rel="noopener" style="color:inherit">Analoggeek</a></span></footer></main><script src="/assets/app.js?v=20261121-freeclipping2"></script>
-<script src="/assets/extras.js?v=20261121-freeclipping2"></script><script src="/assets/transcripts.js?v=20261121-freeclipping2"></script><script src="/assets/vision.js?v=20261121-freeclipping2"></script><script src="/assets/report.js?v=20261121-freeclipping2"></script></body></html>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#setup">Setup</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="wrap">
+    <div>
+      <div class="kicker">100% LOCAL · FREE · OPEN-SOURCE</div>
+      <h1>Long video.<br><em>Big moments.</em></h1>
+      <p class="sub">Paste a YouTube, Twitch or Kick link. Get captioned 9:16 clips in about two minutes. Hinglish captions, facecam layouts and live clipping included.</p>
+      <div class="cta">
+        <a class="btn main" id="dl" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Windows-x64.zip">⬇ Download for Windows (offline)</a>
+        <a class="btn ghost" id="dl-alt" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-macOS-arm64.zip">⬇ Download for macOS (offline)</a>
+      </div>
+      <div class="fine">One click: download, double-click, done. No account. Your videos never leave your computer. Native <b>.dmg</b> (macOS) + <b>.exe</b> (Windows) + offline zips — all offline, zero internet needed after download.</div>
+      <div class="chip-row"><span>~2 min per clip</span><span>52 languages</span><span>No upload, ever</span><span>MIT licensed</span><span>3D icon</span></div>
+      <div class="os-note note" id="mobile-note"><b>You are on a phone.</b> FreeClipping runs on a computer. Open this page on your PC — or just use the phone as a remote for the app on your PC over the same Wi-Fi (<code>NEONCLIPPING_LAN=1</code>).<br><a href="#" id="copy-link">copy this page link ↗</a> and send it to yourself.</div>
+    </div>
+    <div class="phone"><video src="docs/demo.mp4" poster="docs/demo-poster.jpg" autoplay loop muted playsinline preload="auto" aria-label="A FreeClipping clip: hook title, captions"></video></div>
+  </div>
+</header>
+
+<section id="how"><div class="wrap">
+  <div class="sec-head"><h2>Three steps. <em>That's all.</em></h2><p class="lead" style="width:100%;margin-top:2px">You do not need to know GitHub, Python or any code.</p></div>
+  <div class="grid-3">
+    <div class="stepcard reveal"><div class="n">1</div><b>Download and double-click</b><p>The setup file checks your PC, installs what is missing and opens FreeClipping in your browser. A shortcut appears on your Desktop.</p></div>
+    <div class="stepcard reveal"><div class="n">2</div><b>Paste a link</b><p>YouTube, Twitch or Kick. Pick where the webcam is (or draw it). Press <b>Make clips</b>.</p></div>
+    <div class="stepcard reveal"><div class="n">3</div><b>Download your clips</b><p>Captioned 9:16 clips appear one by one with a title, a hook and a viral score. Preview, then Download MP4.</p></div>
+  </div>
+</div></section>
+
+<section id="features"><div class="wrap">
+  <div class="sec-head"><h2>Made for <em>gamers and streamers</em></h2><p class="lead" style="width:100%;margin-top:2px">It does not just cut at random. It looks for the moments people actually watch.</p></div>
+  <div class="grid-2">
+    <div class="tile reveal"><div class="ic">🔥</div><b>Finds the real moments</b><p>Loudness jumps, screaming, what is said ("oh my god", "bhaago"), fast action, explosions and a local AI read, combined into a 0–99 viral score.</p></div>
+    <div class="tile reveal"><div class="ic">💬</div><b>Hinglish captions</b><p>Hindi speech written in English letters, 2–4 words at a time, with the spoken word lit up. Five styles: GTA Neon, Hormozi, MrBeast, Impact, Clean.</p></div>
+    <div class="tile reveal"><div class="ic">🎮</div><b>Facecam layouts</b><p>Face on top, game below. Pick the webcam corner or draw your own boxes. Blurred fill and more.</p></div>
+    <div class="tile reveal"><div class="ic">📡</div><b>Live clipping</b><p>Paste a live Twitch or YouTube link. It records, watches chat speed and cuts a clip around every spike while the stream is on.</p></div>
+    <div class="tile reveal"><div class="ic">⭐</div><b>Learns from you</b><p>Rate clips with stars. After a few ratings it re-weights what a good clip means for your taste. Stored only on your PC.</p></div>
+    <div class="tile reveal"><div class="ic">🔎</div><b>Finds your facecam</b><p>One click: it looks for the webcam box (a steady border with a face inside) and sets the layout. It ignores the minimap and says so when it is not sure.</p></div>
+    <div class="tile reveal"><div class="ic">🎨</div><b>Templates and style</b><p>X post, TikTok hook or Breaking-news frames, padded cards on a blur, colour or image, logo, credit line, outro ribbon, a music bed that rises at the end, six caption animations.</p></div>
+    <div class="tile reveal"><div class="ic">👥</div><b>Creator list</b><p>Add a streamer once. When they go live, FreeClipping records and clips the chat spikes by itself, one stream at a time.</p></div>
+    <div class="tile reveal"><div class="ic">🤖</div><b>Long streams with a free chatbot</b><p>Splits a 9-hour transcript into small parts with copy-ready prompts, reads the chatbot answers back and downloads only those sections.</p></div>
+    <div class="tile reveal"><div class="ic">📱</div><b>Phone remote</b><p>Control live clipping from your phone on the same Wi-Fi: chat-hype meter, clip length, Clip now, play and save clips. PIN protected, off unless you start it.</p></div>
+    <div class="tile reveal"><div class="ic">🔒</div><b>Free and private</b><p>Runs locally. No account, no subscription, nothing uploaded, nothing locked. MIT open-source.</p></div>
+  </div>
+</div></section>
+
+<section id="setup"><div class="wrap">
+  <div class="sec-head"><h2>Pick your <em>setup</em></h2><p class="lead" style="width:100%;margin-top:2px">Windows is one click. Everything else has an easy way too.</p></div>
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-p="win">Windows (one click)</button>
+    <button class="tab" data-p="ai">Let an AI agent do it</button>
+    <button class="tab" data-p="mac">Mac / Linux</button>
+    <button class="tab" data-p="dev">Developers</button>
+  </div>
+
+  <div class="pane on" id="p-win">
+    <a class="btn main" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Windows-x64.zip">⬇ Download FreeClipping-Offline-Windows-x64.zip</a>
+    <ol>
+      <li>Open the downloaded file (double-click). If Windows asks "Windows protected your PC", press <b>More info → Run anyway</b>. The file is plain text and not code-signed; you can open it in Notepad first.</li>
+      <li>It checks your PC and installs what is missing (Python). Fully offline — the app and every package are already inside. About 3–8 minutes, no admin rights.</li>
+      <li>It asks two optional questions (GPU libraries, AI titles) and then opens FreeClipping in your browser.</li>
+      <li>Next time just double-click the <b>FreeClipping</b> shortcut on your Desktop.</li>
+    </ol>
+    <div class="note">Everything is installed in one folder (<code>%LOCALAPPDATA%\FreeClipping</code>). Delete it to uninstall.</div>
+  </div>
+
+  <div class="pane" id="p-ai">
+    <p class="lead2">Don't want to read anything? Give this prompt to an AI agent that can run commands on your computer (Claude Code, OpenAI Codex, Google Antigravity, Cursor). It checks your PC, installs everything, opens the app and explains it to you in simple Hindi.</p>
+    <button class="btn pink" id="copy-prompt">📋 Copy the setup prompt</button>
+    <span id="copy-prompt-msg"></span>
+    <p style="margin-top:16px"><a href="docs/FREECLIPPING-AGENT-SETUP-PROMPT.txt" target="_blank" rel="noopener">Open the prompt as a text file</a> · <a href="docs/FreeClipping-Guide-EN-HI.pdf" target="_blank" rel="noopener">Read the guide (PDF, English + हिंदी)</a></p>
+  </div>
+
+  <div class="pane" id="p-mac">
+    <p class="lead2">macOS (Apple Silicon): one file — the app and every package are inside, <b>no internet needed at install time</b>.</p>
+    <a class="btn main" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-macOS-arm64.zip">⬇ Download FreeClipping-Offline-macOS-arm64.zip</a>
+    <ol>
+      <li>Unzip, then in Terminal: <code>chmod +x FreeClipping-Offline-Setup-macOS-arm64.sh &amp;&amp; ./FreeClipping-Offline-Setup-macOS-arm64.sh</code></li>
+      <li>Requires Python 3.12 (<code>brew install python@3.12</code>). The installer installs nothing system-wide.</li>
+      <li>Then launch from <code>~/Applications/FreeClipping.app</code> — with the 3D bolt icon.</li>
+    </ol>
+    <div class="note">Fully offline (~217 MB zip). Intel Macs: <a href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-macOS-x64.zip">FreeClipping-Offline-macOS-x64.zip</a>.</div>
+  </div>
+
+  <div class="pane" id="p-dev">
+    <pre>git clone https://github.com/Analoggeek/FreeClipping
+cd freeclipping
+./run.ps1     # Windows
+./run.sh      # Mac / Linux</pre>
+    <p style="color:var(--muted)">Then open <code>http://127.0.0.1:8770</code>. Source, issues and the full README: <a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">github.com/Analoggeek/FreeClipping</a>.</p>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><h2>What it <em>looks like</em></h2><p class="lead" style="width:100%;margin-top:2px">One page. Paste, press, download.</p></div>
+  <figure style="margin:0"><img class="shot" src="docs/freeclipping-ui.jpg" alt="FreeClipping showing three finished clips"><figcaption style="color:var(--muted);font-size:13.5px;margin-top:14px;text-align:center">Finished clips, generated locally, on your own PC.</figcaption></figure>
+</div></section>
+
+<section id="faq" class="faq"><div class="wrap">
+  <div class="sec-head"><h2><em>Questions</em></h2></div>
+  <details open><summary>Is it really free?<span class="chev">+</span></summary><p>Yes. It is open-source (MIT). No account, no subscription, no watermark, nothing locked behind a donation.</p></details>
+  <details><summary>Does it upload my videos?<span class="chev">+</span></summary><p>No. Everything runs on your own computer. Videos, clips and your ratings stay in the app folder. The app only talks to YouTube/Twitch/Kick to fetch the video you paste.</p></details>
+  <details><summary>What do I need?<span class="chev">+</span></summary><p>macOS 11+ (Apple Silicon) or Windows 10/11, plus Python 3.12 on your own PC. After you download the offline installer once, everything runs with no internet at all. An NVIDIA GPU makes some steps faster but is not required.</p></details>
+  <details><summary>Does it work on my phone?<span class="chev">+</span></summary><p>This website works on a phone. The clip maker runs on your PC — and your phone can act as a remote for it over the same Wi-Fi (start the app with <code>NEONCLIPPING_LAN=1</code>): chat-hype meter, chat-spike clip buttons, play and save clips. PIN protected, off by default.</p></details>
+  <details><summary>Why does Windows show a warning?<span class="chev">+</span></summary><p>The setup files are not code-signed (that costs money). They are plain text: right-click → Edit, or open them in Notepad, and read every line. The app itself is fully open-source on GitHub.</p></details>
+  <details><summary>How good are the picked moments?<span class="chev">+</span></summary><p>It finds loud, energetic, quotable moments with fast action. It is a heuristic plus a small local AI, not magic: always watch a clip before posting. Your star ratings make it better at your taste.</p></details>
+  <details><summary>How do I uninstall?<span class="chev">+</span></summary><p>Delete the FreeClipping folder in <code>%LOCALAPPDATA%</code> and the Desktop shortcut. Nothing else is changed on your PC (Python and FFmpeg stay if you had them).</p></details>
+</div></section>
+
+<section><div class="wrap">
+  <div class="support">
+    <h2>Liked it? <em>Help it grow.</em></h2>
+    <p>FreeClipping is free and built by one person. A GitHub star tells me it is useful and helps me keep improving it: faster clips, smarter picks, more languages.</p>
+    <a class="btn white" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div><b>FreeClipping</b> · MIT licence</div>
+  <div><a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">GitHub</a> · <a href="https://github.com/Analoggeek/FreeClipping/releases" target="_blank" rel="noopener">Releases</a> · <a href="docs/FreeClipping-Guide-EN-HI.pdf" target="_blank" rel="noopener">Guide (PDF)</a></div>
+</div><p class="copy-note">Made by <b>FreeClipping</b> · ⚡ paste a link, get clips, keep them on your PC.</p></footer>
+
+<script>
+(function(){
+  // reveal on scroll
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  }else{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in')})}
+  // tabs
+  document.querySelectorAll('.tab').forEach(function(t){t.onclick=function(){
+    document.querySelectorAll('.tab').forEach(function(x){x.classList.toggle('on',x===t)});
+    document.querySelectorAll('.pane').forEach(function(p){p.classList.toggle('on',p.id==='p-'+t.dataset.p)});
+  };});
+  // copy buttons
+  document.querySelectorAll('[data-copy]').forEach(function(b){b.onclick=function(){
+    var txt=document.getElementById(b.dataset.copy).textContent;
+    navigator.clipboard.writeText(txt).then(function(){var o=b.textContent;b.textContent='Copied ✓';setTimeout(function(){b.textContent=o},1500)});
+  };});
+  // copy the agent prompt (loaded from the same site so it always matches the repo)
+  var cp=document.getElementById('copy-prompt'),msg=document.getElementById('copy-prompt-msg');
+  if(cp)cp.onclick=function(){
+    fetch('docs/FREECLIPPING-AGENT-SETUP-PROMPT.txt').then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+      return navigator.clipboard.writeText(t).then(function(){msg.textContent='Copied ✓ now paste it into your AI agent'});
+    }).catch(function(){msg.textContent='Could not copy. Use "Open the prompt as a text file" below.';msg.style.color='#ffb86b'});
+  };
+  // phone and non-Windows hints
+  var ua=navigator.userAgent||'',mobile=/Android|iPhone|iPad|iPod/i.test(ua),mac=/Macintosh|Mac OS X/i.test(ua)&&!mobile,linux=/Linux|X11/i.test(ua)&&!mobile&&!/Windows/i.test(ua);
+  if(mobile){document.getElementById('mobile-note').style.display='block';
+    var c=document.getElementById('copy-link');if(c)c.onclick=function(e){e.preventDefault();navigator.clipboard&&navigator.clipboard.writeText(location.href);c.textContent='link copied ✓'};}
+  if(mac){var dl=document.getElementById('dl');dl.textContent='⬇ Download for macOS (offline)';dl.href='https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-macOS-arm64.zip';
+    var al=document.getElementById('dl-alt');if(al)al.style.display='none';
+    document.querySelector('[data-p="mac"]').click();}
+  if(linux){var dl2=document.getElementById('dl');dl2.textContent='⬇ Windows setup (you are on Linux: see Setup)';dl2.href='#setup';
+    var al2=document.getElementById('dl-alt');if(al2)al2.style.display='none';
+    document.querySelector('[data-p="mac"]').click();}
+  var mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu');
+  if(mb&&mm){mb.onclick=function(){var open=mm.classList.toggle('open');mb.setAttribute('aria-expanded',open?'true':'false');mb.textContent=open?'✕':'☰'};
+    mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mm.classList.remove('open');mb.setAttribute('aria-expanded','false');mb.textContent='☰'});});}
+})();
+</script>
+</body>
+</html>
