@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06070d">
+<link rel="apple-touch-icon" href="icon.png">
 <title>FreeClipping · Free AI clip maker for gamers and streamers</title>
 <meta name="description" content="Paste a YouTube, Twitch or Kick link and get captioned 9:16 clips in about two minutes. Free, open-source, runs on your own PC. Hinglish captions, facecam layouts, live clipping.">
 <meta property="og:title" content="FreeClipping: paste a link, get captioned 9:16 clips">
@@ -60,6 +62,12 @@ nav .links a:hover{color:var(--white);background:rgba(148,163,184,.1)}
 .btn.white{background:#fff;color:#06070d;box-shadow:0 8px 26px rgba(255,255,255,.14)}
 .btn.white:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,255,255,.2)}
 nav .btn.small{padding:9px 18px;font-size:13.5px;border-radius:11px}
+.menu-btn{touch-action:manipulation;display:none;border:1px solid var(--line-strong);background:var(--panel);color:var(--white);border-radius:12px;padding:9px 13px;font-size:20px;line-height:1;cursor:pointer;align-items:center;justify-content:center;transition:border-color .2s}
+.menu-btn:hover{border-color:rgba(34,211,238,.5)}
+.mobile-menu{display:none;flex-direction:column;gap:4px;padding:10px 22px 18px;background:rgba(6,7,13,.96);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{color:var(--white);text-decoration:none;font-weight:700;font-size:16px;padding:12px 10px;border-radius:12px}
+.mobile-menu a:hover{background:rgba(148,163,184,.1);color:var(--cyan)}
 
 /* HERO */
 .hero{position:relative;overflow:hidden;padding:74px 0 96px}
@@ -156,9 +164,23 @@ footer a:hover{color:var(--white)}
   .phone{width:min(230px,86%)}
   .grid-3,.grid-2{grid-template-columns:1fr}
   nav .links a:not(.btn){display:none}
+  .menu-btn{display:inline-flex}
+  .links .btn{padding:8px 12px;font-size:12.5px}
   section{padding:48px 0}
   h1{font-size:clamp(38px,11vw,58px)}
   .support{padding:36px 22px}
+  .cta{gap:10px}
+  .cta a{flex:1 1 160px;padding:14px 16px;font-size:15px}
+  .phone{width:min(215px,82%)}
+  .chip-row span{font-size:11px;padding:6px 12px}
+}
+@media (max-width:430px){
+  .hero{padding:42px 0 56px}
+  .hero .wrap{gap:26px}
+  .sub{font-size:16px}
+  .kicker{font-size:10px;letter-spacing:.14em}
+  .fine{font-size:12px}
+  .nav-btn,nav .btn.small{padding:8px 10px;font-size:12px}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
@@ -175,7 +197,16 @@ footer a:hover{color:var(--white)}
     <a href="#how">How it works</a><a href="#features">Features</a><a href="#setup">Setup</a><a href="#faq">FAQ</a>
     <a class="btn white small" href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
   </div>
-</div></nav>
+  <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">☰</button>
+</div>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#setup">Setup</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://github.com/Analoggeek/FreeClipping" target="_blank" rel="noopener">★ Star on GitHub</a>
+  </div>
+</nav>
 
 <header class="hero">
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
@@ -185,8 +216,8 @@ footer a:hover{color:var(--white)}
       <h1>Long video.<br><em>Big moments.</em></h1>
       <p class="sub">Paste a YouTube, Twitch or Kick link. Get captioned 9:16 clips in about two minutes. Hinglish captions, facecam layouts and live clipping included.</p>
       <div class="cta">
-        <a class="btn main" id="dl" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Setup.bat">⬇ Download for Windows</a>
-        <a class="btn ghost" href="#setup">Mac / Linux / AI-agent setup</a>
+        <a class="btn main" id="dl" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Setup-Windows-x64.bat">⬇ Download for Windows (offline)</a>
+        <a class="btn ghost" id="dl-alt" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Setup-macOS-arm64.sh">⬇ Download for macOS (offline)</a>
       </div>
       <div class="fine">One click: download, double-click, done. No account. Your videos never leave your computer.</div>
       <div class="chip-row"><span>~2 min per clip</span><span>52 languages</span><span>No upload, ever</span><span>MIT licensed</span></div>
@@ -232,10 +263,10 @@ footer a:hover{color:var(--white)}
   </div>
 
   <div class="pane on" id="p-win">
-    <a class="btn main" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Setup.bat">⬇ Download FreeClipping-Setup.bat</a>
+    <a class="btn main" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Setup-Windows-x64.bat">⬇ Download FreeClipping-Offline-Setup-Windows-x64.bat</a>
     <ol>
       <li>Open the downloaded file (double-click). If Windows asks "Windows protected your PC", press <b>More info → Run anyway</b>. The file is plain text and not code-signed; you can open it in Notepad first.</li>
-      <li>It checks your PC and installs what is missing (Python, FFmpeg). Needs internet, about 3–8 minutes, no admin rights.</li>
+      <li>It checks your PC and installs what is missing (Python). Fully offline — the app and every package are already inside. About 3–8 minutes, no admin rights.</li>
       <li>It asks two optional questions (GPU libraries, AI titles) and then opens FreeClipping in your browser.</li>
       <li>Next time just double-click the <b>FreeClipping</b> shortcut on your Desktop.</li>
     </ol>
@@ -250,9 +281,14 @@ footer a:hover{color:var(--white)}
   </div>
 
   <div class="pane" id="p-mac">
-    <p class="lead2">Needs Python 3.10+ and FFmpeg (the script tells you if something is missing). Paste into Terminal:</p>
-    <div class="copy"><pre id="mac-cmd">curl -fsSL https://raw.githubusercontent.com/Analoggeek/FreeClipping/main/install.sh | bash</pre><button class="btn pink" data-copy="mac-cmd">Copy</button></div>
-    <div class="note">The Mac/Linux installer is new and has not been tested on a real Mac yet. If it fails, use the AI-agent tab or the developer steps.</div>
+    <p class="lead2">macOS (Apple Silicon): one file — the app and every package are inside, <b>no internet needed at install time</b>.</p>
+    <a class="btn main" href="https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Setup-macOS-arm64.sh">⬇ Download FreeClipping-Offline-Setup-macOS-arm64.sh</a>
+    <ol>
+      <li>In Terminal: <code>chmod +x FreeClipping-Offline-Setup-macOS-arm64.sh &amp;&amp; ./FreeClipping-Offline-Setup-macOS-arm64.sh</code></li>
+      <li>Requires Python 3.12 (<code>brew install python@3.12</code>). The installer installs nothing system-wide.</li>
+      <li>Then launch from <code>~/Applications/FreeClipping.app</code> — with the 3D bolt icon.</li>
+    </ol>
+    <div class="note">Fully offline (~217 MB). Other Macs (Intel), Linux, or anything else: use the AI-agent tab or the developer steps.</div>
   </div>
 
   <div class="pane" id="p-dev">
@@ -273,9 +309,9 @@ cd freeclipping
   <div class="sec-head"><h2><em>Questions</em></h2></div>
   <details open><summary>Is it really free?<span class="chev">+</span></summary><p>Yes. It is open-source (MIT). No account, no subscription, no watermark, nothing locked behind a donation.</p></details>
   <details><summary>Does it upload my videos?<span class="chev">+</span></summary><p>No. Everything runs on your own computer. Videos, clips and your ratings stay in the app folder. The app only talks to YouTube/Twitch/Kick to fetch the video you paste.</p></details>
-  <details><summary>What do I need?<span class="chev">+</span></summary><p>A Windows 10/11 PC (a Mac/Linux script exists but is untested) and internet for the first install. An NVIDIA GPU makes some steps faster but is not required.</p></details>
-  <details><summary>Does it work on my phone?<span class="chev">+</span></summary><p>The tool runs on a computer. This website works on a phone, but the clip maker needs a PC. Using your phone as a remote for the app on your PC (same Wi-Fi) is planned, not built yet.</p></details>
-  <details><summary>Why does Windows show a warning?<span class="chev">+</span></summary><p>The setup file is not code-signed (that costs money). It is plain text: right-click → Edit, or open it in Notepad, and read every line. The app itself is fully open-source on GitHub.</p></details>
+  <details><summary>What do I need?<span class="chev">+</span></summary><p>macOS 11+ (Apple Silicon) or Windows 10/11, plus Python 3.12 on your own PC. After you download the offline installer once, everything runs with no internet at all. An NVIDIA GPU makes some steps faster but is not required.</p></details>
+  <details><summary>Does it work on my phone?<span class="chev">+</span></summary><p>This website works on a phone. The clip maker runs on your PC — and your phone can act as a remote for it over the same Wi-Fi (start the app with <code>NEONCLIPPING_LAN=1</code>): chat-hype meter, chat-spike clip buttons, play and save clips. PIN protected, off by default.</p></details>
+  <details><summary>Why does Windows show a warning?<span class="chev">+</span></summary><p>The setup files are not code-signed (that costs money). They are plain text: right-click → Edit, or open them in Notepad, and read every line. The app itself is fully open-source on GitHub.</p></details>
   <details><summary>How good are the picked moments?<span class="chev">+</span></summary><p>It finds loud, energetic, quotable moments with fast action. It is a heuristic plus a small local AI, not magic: always watch a clip before posting. Your star ratings make it better at your taste.</p></details>
   <details><summary>How do I uninstall?<span class="chev">+</span></summary><p>Delete the FreeClipping folder in <code>%LOCALAPPDATA%</code> and the Desktop shortcut. Nothing else is changed on your PC (Python and FFmpeg stay if you had them).</p></details>
 </div></section>
@@ -321,8 +357,15 @@ cd freeclipping
   var ua=navigator.userAgent||'',mobile=/Android|iPhone|iPad|iPod/i.test(ua),mac=/Macintosh|Mac OS X/i.test(ua)&&!mobile,linux=/Linux|X11/i.test(ua)&&!mobile&&!/Windows/i.test(ua);
   if(mobile){document.getElementById('mobile-note').style.display='block';
     var c=document.getElementById('copy-link');if(c)c.onclick=function(e){e.preventDefault();navigator.clipboard&&navigator.clipboard.writeText(location.href);c.textContent='link copied ✓'};}
-  if(mac||linux){var dl=document.getElementById('dl');dl.textContent='⬇ Windows setup (you are on '+(mac?'Mac':'Linux')+': see Mac / Linux tab)';dl.href='#setup';
+  if(mac){var dl=document.getElementById('dl');dl.textContent='⬇ Download for macOS (offline)';dl.href='https://github.com/Analoggeek/FreeClipping/releases/latest/download/FreeClipping-Offline-Setup-macOS-arm64.sh';
+    var al=document.getElementById('dl-alt');if(al)al.style.display='none';
     document.querySelector('[data-p="mac"]').click();}
+  if(linux){var dl2=document.getElementById('dl');dl2.textContent='⬇ Windows setup (you are on Linux: see Setup)';dl2.href='#setup';
+    var al2=document.getElementById('dl-alt');if(al2)al2.style.display='none';
+    document.querySelector('[data-p="mac"]').click();}
+  var mb=document.getElementById('menu-btn'),mm=document.getElementById('mobile-menu');
+  if(mb&&mm){mb.onclick=function(){var open=mm.classList.toggle('open');mb.setAttribute('aria-expanded',open?'true':'false');mb.textContent=open?'✕':'☰'};
+    mm.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){mm.classList.remove('open');mb.setAttribute('aria-expanded','false');mb.textContent='☰'});});}
 })();
 </script>
 </body>
