@@ -71,6 +71,15 @@ FreeClipping uses an intelligent hybrid audio-visual heuristic pipeline to pinpo
 
 ---
 
+### Self-contained .app bundles (macOS — double-click, no installer)
+
+For macOS, the app ships as a **self-contained `.app` bundle** — it embeds the app source and the whole Python-3.12 wheelhouse. The very first launch sets up the local environment inside the bundle itself. No installer, no shell script.
+
+* **macOS (Apple Silicon):** `FreeClipping-macOS-arm64.app.zip` — unzip, then double-click `FreeClipping.app`.
+* **macOS (Intel):** `FreeClipping-macOS-x64.app.zip` — unzip, then double-click `FreeClipping.app`.
+
+> Requires Python 3.12 on the target machine. On first launch the bundle bootstraps a local venv in itself; afterwards it launches instantly. See `tools/offline/make_app_bundle.py`.
+
 ### Offline installers (macOS Intel + Apple Silicon + Windows, no internet needed)
 
 Self-contained zips — the app **and every dependency are baked in**. No downloads required.
