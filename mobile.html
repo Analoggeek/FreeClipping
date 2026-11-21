@@ -1,7 +1,7 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en" data-theme="night"><head><meta charset="utf-8"><script>try{var t=localStorage.getItem('freeclipping-theme');if(t!=='day'&&t!=='night')t=window.matchMedia('(prefers-color-scheme: light)').matches?'day':'night';document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='night';}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07090e"><meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#07090e"><meta name="color-scheme" content="dark light">
 <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" type="image/png" href="/icon-192.png"><link rel="apple-touch-icon" type="image/png" href="/icon-512.png">
 <title>FreeClipping · Phone Remote</title>
 <style>
@@ -21,7 +21,28 @@ button:disabled{opacity:.45}.row{display:flex;gap:8px}.row>*{flex:1}
 .clips{display:grid;gap:12px}.clip video{width:100%;border-radius:12px;background:#000;aspect-ratio:9/16;max-height:62vh}
 .clip b{display:block;margin:8px 0 2px}.clip a{display:inline-block;margin-top:8px;padding:11px 16px;border-radius:12px;background:var(--lime,#a3e635);color:#06070d;text-decoration:none;font-weight:800;margin-right:8px;box-shadow:0 6px 18px rgba(163,230,53,.28)}
 .hide{display:none}.pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--cyan)}
+
+/* ============ day/night ============ */
+#theme-toggle{position:fixed;top:calc(env(safe-area-inset-top, 8px) + 8px);right:12px;z-index:20;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card-bg,rgba(21,29,48,.74));color:var(--white);font-size:19px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(0,0,0,.35);cursor:pointer}
+#theme-toggle:active{transform:scale(.92)}
+html[data-theme="day"]{--bg:#f2f5fb;--panel:#ffffff;--card-bg:rgba(255,255,255,.92);--line:rgba(27,36,54,.16);--white:#1c2434;--muted:#59657d;--cyan:#0891b2;--azure:#0284c7;--blue:#2563eb;--lime:#65a30d;--pink:#e11d48}
+html[data-theme="day"] body{background:radial-gradient(60vw 40vw at 12% -6%,rgba(8,145,178,.12) 0%,transparent 60%),radial-gradient(60vw 50vw at 92% 18%,rgba(79,70,229,.1) 0%,transparent 64%),var(--bg);color:var(--white)}
+html[data-theme="day"] .card{background:linear-gradient(160deg,rgba(255,255,255,.97),rgba(244,247,252,.97));box-shadow:0 14px 34px rgba(24,39,73,.14),inset 0 1px 0 rgba(255,255,255,.9)}
+html[data-theme="day"] .card{border-color:var(--line)}
+html[data-theme="day"] label.f{color:#5a647a}
+html[data-theme="day"] input[type=text],html[data-theme="day"] input[type=password],html[data-theme="day"] input[type=tel],html[data-theme="day"] select{background:#ffffff;color:var(--white);border-color:var(--line)}
+html[data-theme="day"] select option{background:#ffffff;color:#1c2434}
+html[data-theme="day"] button{background:#ffffff;color:var(--white);border-color:rgba(27,36,54,.26);box-shadow:0 1px 4px rgba(24,39,73,.12)}
+html[data-theme="day"] button.main{background:linear-gradient(135deg,var(--cyan),var(--lime));color:#0b1220}
+html[data-theme="day"] button.ghost{background:transparent}
+html[data-theme="day"] .seg button{background:#eef1f8;color:var(--white)}
+html[data-theme="day"] .seg button.on{background:var(--cyan);border-color:var(--cyan);color:#0b1220}
+html[data-theme="day"] .meter{background:#e4e9f3}
+html[data-theme="day"] .muted{color:var(--muted)}
+html[data-theme="day"] .pill{border-color:var(--line);color:var(--cyan)}
+html[data-theme="day"] .err{color:#dc2626}
 </style></head><body>
+<button id="theme-toggle" type="button" aria-label="Switch day and night mode">☀</button>
 <h1>FreeClipping <span class="pill">phone remote</span></h1>
 <div class="sub">The PC does the work. This screen controls it and plays your clips.</div>
 
@@ -112,4 +133,8 @@ $('stop').onclick=async()=>{if(!liveId)return;try{await api('/live/'+liveId+'/st
 $('now').onclick=async()=>{if(!liveId)return;try{await api('/live/'+liveId+'/clip-now',{seconds:length||30});$('live-stats').textContent='Cutting the last '+(length||30)+' s…';}catch(e){$('live-err').textContent=e.message;}};
 async function boot(){try{const a=await api('/live-active');if(a.live)attach(a.live);}catch(e){}}
 (async()=>{try{await api('/live-active');show(true);boot();}catch(e){show(false);}})();
+(function(){var root=document.documentElement,btn=document.getElementById('theme-toggle');
+function paint(){var day=root.dataset.theme==='day';if(btn){btn.textContent=day?'🌙':'☀';btn.setAttribute('aria-label',day?'Switch to night mode':'Switch to day mode');}}
+if(btn)btn.addEventListener('click',function(){var next=root.dataset.theme==='day'?'night':'day';root.dataset.theme=next;try{localStorage.setItem('freeclipping-theme',next);}catch(e){}paint();});
+paint();})();
 </script></body></html>
